@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MARS — Live Demo</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0a0a0a;
+            --text: #e0e0e0;
+            --green: #3fb950;
+            --orange: #ff6b35;
+            --red: #d73a49;
+            --grid: rgba(63, 185, 80, 0.15);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Space Mono', 'Courier New', monospace;
+            background: var(--bg);
+            color: var(--text);
+            overflow: hidden;
+            height: 100vh;
+        }
+
+        #canvas-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 10;
+            pointer-events: none;
+        }
+
+        .hud {
+            position: absolute;
+            top: 2rem;
+            left: 2rem;
+            font-size: 0.875rem;
+            line-height: 1.8;
+        }
+
+        .hud-label {
+            color: var(--green);
+            opacity: 0.5;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            font-size: 0.75rem;
+        }
+
+        .hud-value {
+            color: var(--text);
+            font-weight: 700;
+        }
+
+        .hud-status {
+            color: var(--orange);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .center-info {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            max-width: 800px;
+            padding: 0 2rem;
+        }
+
+        .center-info h1 {
+            font-size: clamp(2rem, 5vw, 4rem);
+            font-weight: 700;
+            margin-bottom: 1rem;
+            letter-spacing: 0.05em;
+            color: var(--green);
+            text-transform: uppercase;
+        }
+
+        .center-info .subtitle {
+            font-size: clamp(0.875rem, 1.5vw, 1.125rem);
+            opacity: 0.6;
+            margin-bottom: 2rem;
+            letter-spacing: 0.05em;
+        }
+
+        .status-bar {
+            position: absolute;
+            bottom: 2rem;
+            left: 2rem;
+            right: 2rem;
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.75rem;
+            opacity: 0.5;
+        }
+
+        .grid-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image:
+                linear-gradient(var(--grid) 1px, transparent 1px),
+                linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+            background-size: 50px 50px;
+            pointer-events: none;
+            z-index: 5;
+            opacity: 0.3;
+        }
+
+        .crosshair {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100px;
+            height: 100px;
+            border: 1px solid var(--green);
+            opacity: 0.3;
+            pointer-events: none;
+        }
+
+        .crosshair::before,
+        .crosshair::after {
+            content: '';
+            position: absolute;
+            background: var(--green);
+        }
+
+        .crosshair::before {
+            top: 50%;
+            left: -20px;
+            right: -20px;
+            height: 1px;
+        }
+
+        .crosshair::after {
+            left: 50%;
+            top: -20px;
+            bottom: -20px;
+            width: 1px;
+        }
+
+        .corner-bracket {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            border: 2px solid var(--green);
+            opacity: 0.4;
+        }
+
+        .corner-bracket.tl {
+            top: 2rem;
+            left: 2rem;
+            border-right: none;
+            border-bottom: none;
+        }
+
+        .corner-bracket.tr {
+            top: 2rem;
+            right: 2rem;
+            border-left: none;
+            border-bottom: none;
+        }
+
+        .corner-bracket.bl {
+            bottom: 2rem;
+            left: 2rem;
+            border-right: none;
+            border-top: none;
+        }
+
+        .corner-bracket.br {
+            bottom: 2rem;
+            right: 2rem;
+            border-left: none;
+            border-top: none;
+        }
+
+        .radar {
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            width: 150px;
+            height: 150px;
+            border: 1px solid var(--green);
+            border-radius: 50%;
+            opacity: 0.3;
+        }
+
+        .radar::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 2px;
+            height: 50%;
+            background: var(--green);
+            transform-origin: top center;
+            animation: radar-sweep 4s linear infinite;
+        }
+
+        @keyframes radar-sweep {
+            0% { transform: translate(-50%, 0) rotate(0deg); }
+            100% { transform: translate(-50%, 0) rotate(360deg); }
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            background: transparent;
+            border: 2px solid var(--green);
+            color: var(--green);
+            font-family: inherit;
+            font-size: 0.875rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+            pointer-events: auto;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn:hover {
+            background: var(--green);
+            color: var(--bg);
+        }
+
+        @media (max-width: 768px) {
+            .hud, .radar, .status-bar {
+                display: none;
+            }
+            
+            .center-info {
+                padding: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="canvas-container"></div>
+    <div class="grid-overlay"></div>
+
+    <div class="overlay">
+        <div class="corner-bracket tl"></div>
+        <div class="corner-bracket tr"></div>
+        <div class="corner-bracket bl"></div>
+        <div class="corner-bracket br"></div>
+        
+        <div class="crosshair"></div>
+        <div class="radar"></div>
+
+        <div class="hud">
+            <div><span class="hud-label">SYSTEM:</span> <span class="hud-value">MARS v2.1</span></div>
+            <div><span class="hud-label">STATUS:</span> <span class="hud-status">ACTIVE</span></div>
+            <div><span class="hud-label">MODE:</span> <span class="hud-value">SIMULATION</span></div>
+            <div style="margin-top: 1rem;"><span class="hud-label">ENV COMP:</span> <span class="hud-value">ENABLED</span></div>
+            <div><span class="hud-label">WIND:</span> <span class="hud-value" id="wind">12.3 m/s</span></div>
+            <div><span class="hud-label">TEMP:</span> <span class="hud-value" id="temp">15.2°C</span></div>
+        </div>
+
+        <div class="center-info">
+            <h1>MARS PLATFORM</h1>
+            <p class="subtitle">ADAPTIVE INTELLIGENCE FOR LONG-RANGE PRECISION</p>
+            <div style="margin-top: 2rem;">
+                <a href="index.html" class="btn">RETURN TO MAIN</a>
+            </div>
+        </div>
+
+        <div class="status-bar">
+            <div>LAT: 48.8566° N | LON: 2.3522° E</div>
+            <div>UTC: <span id="clock">--:--:--</span></div>
+            <div>FPS: <span id="fps">60</span></div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>
+        // Three.js scene setup
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+        
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setClearColor(0x0a0a0a, 1);
+        document.getElementById('canvas-container').appendChild(renderer.domElement);
+
+        // Particle system
+        const particleCount = 2000;
+        const particles = new THREE.BufferGeometry();
+        const positions = new Float32Array(particleCount * 3);
+        const velocities = [];
+
+        for (let i = 0; i < particleCount * 3; i += 3) {
+            positions[i] = (Math.random() - 0.5) * 50;
+            positions[i + 1] = (Math.random() - 0.5) * 50;
+            positions[i + 2] = (Math.random() - 0.5) * 50;
+            
+            velocities.push({
+                x: (Math.random() - 0.5) * 0.02,
+                y: (Math.random() - 0.5) * 0.02,
+                z: (Math.random() - 0.5) * 0.02
+            });
+        }
+
+        particles.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+
+        const particleMaterial = new THREE.PointsMaterial({
+            color: 0x3fb950,
+            size: 0.1,
+            transparent: true,
+            opacity: 0.6
+        });
+
+        const particleSystem = new THREE.Points(particles, particleMaterial);
+        scene.add(particleSystem);
+
+        // Grid helper
+        const gridHelper = new THREE.GridHelper(50, 50, 0x3fb950, 0x1a1a1a);
+        gridHelper.position.y = -10;
+        scene.add(gridHelper);
+
+        // Trajectory path
+        const curve = new THREE.CatmullRomCurve3([
+            new THREE.Vector3(-10, 0, 0),
+            new THREE.Vector3(-5, 5, -5),
+            new THREE.Vector3(0, 3, -10),
+            new THREE.Vector3(5, 7, -15),
+            new THREE.Vector3(10, 5, -20)
+        ]);
+
+        const points = curve.getPoints(100);
+        const geometry = new THREE.BufferGeometry().setFromPoints(points);
+        const material = new THREE.LineBasicMaterial({ color: 0xff6b35, linewidth: 2 });
+        const trajectory = new THREE.Line(geometry, material);
+        scene.add(trajectory);
+
+        // Moving target
+        const targetGeometry = new THREE.SphereGeometry(0.3, 16, 16);
+        const targetMaterial = new THREE.MeshBasicMaterial({ color: 0xd73a49 });
+        const target = new THREE.Mesh(targetGeometry, targetMaterial);
+        scene.add(target);
+
+        camera.position.z = 20;
+        camera.position.y = 5;
+        camera.lookAt(0, 0, -10);
+
+        // Animation
+        let frame = 0;
+        let targetProgress = 0;
+
+        function animate() {
+            requestAnimationFrame(animate);
+            frame++;
+
+            // Rotate particle system
+            particleSystem.rotation.y += 0.001;
+
+            // Update particles
+            const positions = particles.attributes.position.array;
+            for (let i = 0; i < particleCount; i++) {
+                positions[i * 3] += velocities[i].x;
+                positions[i * 3 + 1] += velocities[i].y;
+                positions[i * 3 + 2] += velocities[i].z;
+
+                // Boundary check
+                if (Math.abs(positions[i * 3]) > 25) velocities[i].x *= -1;
+                if (Math.abs(positions[i * 3 + 1]) > 25) velocities[i].y *= -1;
+                if (Math.abs(positions[i * 3 + 2]) > 25) velocities[i].z *= -1;
+            }
+            particles.attributes.position.needsUpdate = true;
+
+            // Move target along trajectory
+            targetProgress += 0.001;
+            if (targetProgress > 1) targetProgress = 0;
+            const point = curve.getPoint(targetProgress);
+            target.position.copy(point);
+
+            // Rotate camera slightly
+            camera.position.x = Math.sin(frame * 0.0005) * 20;
+            camera.lookAt(0, 0, -10);
+
+            renderer.render(scene, camera);
+        }
+
+        animate();
+
+        // Handle resize
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+        // Update HUD values
+        setInterval(() => {
+            document.getElementById('wind').textContent = (10 + Math.random() * 5).toFixed(1) + ' m/s';
+            document.getElementById('temp').textContent = (14 + Math.random() * 3).toFixed(1) + '°C';
+        }, 2000);
+
+        // Clock
+        function updateClock() {
+            const now = new Date();
+            const utc = now.toISOString().split('T')[1].split('.')[0];
+            document.getElementById('clock').textContent = utc;
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+
+        // FPS counter
+        let lastTime = performance.now();
+        let frames = 0;
+        setInterval(() => {
+            const now = performance.now();
+            const fps = Math.round(frames / ((now - lastTime) / 1000));
+            document.getElementById('fps').textContent = fps;
+            frames = 0;
+            lastTime = now;
+        }, 1000);
+        
+        function countFrame() {
+            frames++;
+            requestAnimationFrame(countFrame);
+        }
+        countFrame();
+    </script>
+</body>
+</html>
