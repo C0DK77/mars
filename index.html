@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MARS — Modular Adaptive Ranged Systems</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0a0e1a;
+            --bg-secondary: #111827;
+            --accent-blue: #3b82f6;
+            --accent-cyan: #06b6d4;
+            --text-primary: #f9fafb;
+            --text-secondary: #9ca3af;
+            --grid-color: rgba(59, 130, 246, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 600;
+            line-height: 1.2;
+        }
+
+        /* Background Grid */
+        .grid-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(var(--grid-color) 1px, transparent 1px),
+                linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+            background-size: 50px 50px;
+            z-index: -1;
+            opacity: 0.3;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Section */
+        section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 4rem 0;
+            position: relative;
+        }
+
+        section.compact {
+            min-height: auto;
+            padding: 6rem 0;
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            position: relative;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 6vw, 5rem);
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, var(--text-primary) 0%, var(--accent-cyan) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .hero .subtitle {
+            font-size: clamp(1rem, 2vw, 1.25rem);
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto 3rem;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .hero .logo {
+            font-size: 1rem;
+            letter-spacing: 0.3em;
+            color: var(--accent-cyan);
+            margin-bottom: 2rem;
+            font-weight: 500;
+            animation: fadeIn 1.2s ease-out;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeInUp 1.2s ease-out;
+        }
+
+        .btn {
+            padding: 1rem 2.5rem;
+            font-size: 1rem;
+            font-weight: 500;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: var(--accent-blue);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #2563eb;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.3);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-primary);
+            border: 1px solid var(--accent-blue);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(59, 130, 246, 0.1);
+            transform: translateY(-2px);
+        }
+
+        /* Content Sections */
+        .section-title {
+            font-size: clamp(2rem, 4vw, 3rem);
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .section-description {
+            font-size: 1.125rem;
+            color: var(--text-secondary);
+            max-width: 800px;
+            margin: 0 auto 3rem;
+            text-align: center;
+            line-height: 1.8;
+        }
+
+        /* Modules Grid */
+        .modules-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .module-card {
+            background: var(--bg-secondary);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            border-radius: 8px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .module-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-blue);
+            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.2);
+        }
+
+        .module-card .icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .module-card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .module-card p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        /* Applications */
+        .applications-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .application-item {
+            background: var(--bg-secondary);
+            border-left: 3px solid var(--accent-cyan);
+            padding: 1.5rem;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+        .application-item:hover {
+            background: rgba(17, 24, 39, 0.8);
+            transform: translateX(5px);
+        }
+
+        .application-item h4 {
+            margin-bottom: 0.5rem;
+            color: var(--accent-cyan);
+        }
+
+        /* Roadmap */
+        .roadmap {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            margin-top: 3rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .roadmap-item {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            position: relative;
+        }
+
+        .roadmap-item::before {
+            content: '';
+            position: absolute;
+            left: 27px;
+            top: 50px;
+            width: 2px;
+            height: 100%;
+            background: var(--grid-color);
+        }
+
+        .roadmap-item:last-child::before {
+            display: none;
+        }
+
+        .roadmap-number {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: var(--accent-blue);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 1.25rem;
+            flex-shrink: 0;
+        }
+
+        .roadmap-content h4 {
+            margin-bottom: 0.5rem;
+        }
+
+        .roadmap-content p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        /* Team */
+        .team-description {
+            background: var(--bg-secondary);
+            padding: 2rem;
+            border-radius: 8px;
+            border-left: 3px solid var(--accent-blue);
+            margin-top: 2rem;
+        }
+
+        .team-skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .skill-tag {
+            background: rgba(59, 130, 246, 0.1);
+            color: var(--accent-cyan);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            border: 1px solid rgba(6, 182, 212, 0.3);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--bg-secondary);
+            padding: 3rem 0;
+            text-align: center;
+            border-top: 1px solid rgba(59, 130, 246, 0.2);
+        }
+
+        footer p {
+            color: var(--text-secondary);
+            margin-top: 1rem;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            section {
+                min-height: auto;
+                padding: 3rem 0;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+            }
+
+            .modules-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="grid-background"></div>
+
+    <!-- HERO SECTION -->
+    <section class="hero">
+        <div class="container">
+            <div class="logo">MARS</div>
+            <h1>Adaptive Intelligence<br>for Long-Range Precision</h1>
+            <p class="subtitle">
+                MARS delivers real-time environmental compensation and intelligent stabilization 
+                for advanced long-range systems. The human operator always remains in control.
+            </p>
+            <div class="cta-buttons">
+                <a href="#contact" class="btn btn-primary">Request Demo</a>
+                <a href="#" class="btn btn-secondary">Download White Paper</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROBLEM SECTION -->
+    <section class="compact">
+        <div class="container">
+            <h2 class="section-title">The Challenge of Long-Range Systems</h2>
+            <p class="section-description">
+                Long-range precision systems face complex environmental variability—wind drift, 
+                atmospheric pressure, temperature gradients, platform instability, and operator 
+                complexity. These factors introduce uncertainty and reduce effectiveness. 
+                MARS transforms raw sensor data into actionable intelligence, enabling operators 
+                to make informed decisions with unprecedented precision.
+            </p>
+        </div>
+    </section>
+
+    <!-- SOLUTION SECTION -->
+    <section class="compact">
+        <div class="container">
+            <h2 class="section-title">The MARS Platform</h2>
+            <p class="section-description">
+                Four integrated modules working in real-time to enhance precision and reduce operator complexity.
+            </p>
+            <div class="modules-grid">
+                <div class="module-card">
+                    <div class="icon">🎯</div>
+                    <h3>Sensor Fusion Engine</h3>
+                    <p>Integrates multi-source environmental data (GPS, IMU, barometric, thermal) into unified state estimation.</p>
+                </div>
+                <div class="module-card">
+                    <div class="icon">🌍</div>
+                    <h3>Predictive Environmental Modeling</h3>
+                    <p>Real-time atmospheric and ballistic modeling using hybrid physics-AI computation.</p>
+                </div>
+                <div class="module-card">
+                    <div class="icon">⚙️</div>
+                    <h3>Adaptive Stabilization Layer</h3>
+                    <p>Intelligent compensation algorithms for platform motion, vibration, and drift mitigation.</p>
+                </div>
+                <div class="module-card">
+                    <div class="icon">📊</div>
+                    <h3>Post-Action Analytics</h3>
+                    <p>Closed-loop feedback system for continuous learning and performance optimization.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TECHNOLOGY SECTION -->
+    <section class="compact">
+        <div class="container">
+            <h2 class="section-title">Hybrid Physics + AI Architecture</h2>
+            <p class="section-description">
+                MARS combines classical numerical simulation with embedded AI inference, 
+                enabling real-time computation on edge hardware. Our modular SDK integrates 
+                seamlessly with existing control systems and offers scalable deployment from 
+                prototypes to production-grade industrial platforms.
+            </p>
+            <div class="modules-grid">
+                <div class="module-card">
+                    <h3>Real-Time Embedded Computation</h3>
+                    <p>Optimized for low-latency processing on constrained hardware environments.</p>
+                </div>
+                <div class="module-card">
+                    <h3>Simulation-Driven Modeling</h3>
+                    <p>Physics-based models validated through extensive simulation and field testing.</p>
+                </div>
+                <div class="module-card">
+                    <h3>Edge AI Compatibility</h3>
+                    <p>Lightweight neural models deployable on ARM, FPGA, and specialized accelerators.</p>
+                </div>
+                <div class="module-card">
+                    <h3>Scalable SDK Integration</h3>
+                    <p>Modular API designed for rapid integration with diverse system architectures.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- APPLICATIONS SECTION -->
+    <section class="compact">
+        <div class="container">
+            <h2 class="section-title">Dual-Use Precision Intelligence</h2>
+            <p class="section-description">
+                MARS technology serves multiple high-precision domains requiring environmental compensation and decision support.
+            </p>
+            <div class="applications-list">
+                <div class="application-item">
+                    <h4>Defense Systems Integration</h4>
+                    <p>Enhances precision and operator effectiveness in advanced targeting platforms.</p>
+                </div>
+                <div class="application-item">
+                    <h4>Advanced Optical Platforms</h4>
+                    <p>Stabilization and tracking for long-range observation and reconnaissance systems.</p>
+                </div>
+                <div class="application-item">
+                    <h4>Simulation and Training Environments</h4>
+                    <p>Realistic environmental modeling for training simulators and virtual testing.</p>
+                </div>
+                <div class="application-item">
+                    <h4>Industrial Long-Range Monitoring</h4>
+                    <p>Precision measurement and control for infrastructure, energy, and surveying applications.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ROADMAP SECTION -->
+    <section class="compact">
+        <div class="container">
+            <h2 class="section-title">Building the Future of Precision Assistance</h2>
+            <div class="roadmap">
+                <div class="roadmap-item">
+                    <div class="roadmap-number">1</div>
+                    <div class="roadmap-content">
+                        <h4>Prototype</h4>
+                        <p>Core algorithms validated through simulation and field testing with early adopters.</p>
+                    </div>
+                </div>
+                <div class="roadmap-item">
+                    <div class="roadmap-number">2</div>
+                    <div class="roadmap-content">
+                        <h4>Industrial Integration</h4>
+                        <p>SDK deployment with defense and optical system integrators for pilot programs.</p>
+                    </div>
+                </div>
+                <div class="roadmap-item">
+                    <div class="roadmap-number">3</div>
+                    <div class="roadmap-content">
+                        <h4>Embedded Deployment</h4>
+                        <p>Production-grade embedded hardware integration and certification.</p>
+                    </div>
+                </div>
+                <div class="roadmap-item">
+                    <div class="roadmap-number">4</div>
+                    <div class="roadmap-content">
+                        <h4>Scalable Licensing</h4>
+                        <p>Commercial licensing model for dual-use precision intelligence platforms.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TEAM SECTION -->
+    <section class="compact">
+        <div class="container">
+            <h2 class="section-title">Built by Engineers</h2>
+            <div class="team-description">
+                <p>
+                    MARS is developed by a team of engineers and researchers with deep expertise 
+                    in real-time embedded systems, numerical simulation, AI modeling, and systems architecture. 
+                    Our approach combines rigorous engineering discipline with cutting-edge machine learning 
+                    to deliver robust, reliable precision intelligence.
+                </p>
+                <div class="team-skills">
+                    <span class="skill-tag">Embedded Systems</span>
+                    <span class="skill-tag">Numerical Simulation</span>
+                    <span class="skill-tag">AI Modeling</span>
+                    <span class="skill-tag">Systems Architecture</span>
+                    <span class="skill-tag">Control Theory</span>
+                    <span class="skill-tag">Signal Processing</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FINAL CTA -->
+    <section class="compact" id="contact">
+        <div class="container">
+            <h2 class="section-title">Partner With MARS</h2>
+            <p class="section-description">
+                We collaborate with industrial and defense partners to integrate next-generation 
+                adaptive precision intelligence into advanced systems.
+            </p>
+            <div class="cta-buttons">
+                <a href="mailto:contact@mars-systems.eu" class="btn btn-primary">Contact Us</a>
+                <a href="#" class="btn btn-secondary">Schedule Technical Briefing</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="container">
+            <p><strong>MARS</strong> — Modular Adaptive Ranged Systems</p>
+            <p>contact@mars-systems.eu • Europe</p>
+            <p style="margin-top: 2rem; font-size: 0.875rem;">© 2026 MARS. All rights reserved.</p>
+        </div>
+    </footer>
+
+</body>
+</html>
