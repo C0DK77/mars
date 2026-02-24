@@ -3,21 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MARS — Modular Adaptive Ranged Systems</title>
+    <title>MARS — Modular Autonomous Ranged System</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg:        #080b12;
-            --bg-nav:    rgba(6, 8, 16, 0.94);
-            --bg-card:   rgba(255,255,255,0.03);
-            --text:      #e8edf5;
-            --muted:     #5a6375;
-            --accent:    #4d9fff;
-            --accent2:   #00d4c8;
+            --bg:        #090b0e;
+            --bg-nav:    rgba(7, 9, 12, 0.95);
+            --bg-card:   rgba(255,255,255,0.025);
+            --text:      #dce4d8;
+            --muted:     #556055;
+            --green:     #5a8a3c;
+            --green-dim: rgba(90,138,60,0.12);
+            --red:       #9b2323;
+            --navy:      #1e3a5f;
+            --accent:    var(--green);
             --border:    rgba(255,255,255,0.07);
-            --border-hi: rgba(77,159,255,0.25);
+            --border-hi: rgba(90,138,60,0.3);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -103,107 +106,75 @@
             font-size: 0.65rem;
             letter-spacing: 0.14em;
             text-transform: uppercase;
-            color: var(--accent);
-            border: 1px solid var(--border-hi);
+            color: #fff;
+            background: var(--green);
             padding: 0.5rem 1.1rem;
             text-decoration: none;
-            transition: background 0.2s, border-color 0.2s;
-            background: rgba(77,159,255,0.05);
+            transition: background 0.2s;
         }
 
-        .nav-cta:hover {
-            background: rgba(77,159,255,0.12);
-            border-color: var(--accent);
-        }
+        .nav-cta:hover { background: #4f7a34; }
 
-        /* ─── CORNER-BRACKET BUTTONS ─── */
+        /* ─── BUTTONS ─── */
         .btn {
-            position: relative;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            padding: 0.85rem 2rem;
+            padding: 0.8rem 1.75rem;
             font-family: 'JetBrains Mono', monospace;
-            font-size: 0.7rem;
+            font-size: 0.68rem;
             letter-spacing: 0.13em;
             text-transform: uppercase;
             text-decoration: none;
             cursor: pointer;
-            background: transparent;
             border: none;
-            transition: all 0.2s;
+            transition: all 0.18s;
+            white-space: nowrap;
         }
 
-        .btn::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0;
-            width: 10px; height: 10px;
-            border-top: 1px solid currentColor;
-            border-left: 1px solid currentColor;
-            transition: all 0.25s;
+        .btn-green {
+            background: var(--green);
+            color: #fff;
         }
 
-        .btn::after {
-            content: '';
-            position: absolute;
-            bottom: 0; right: 0;
-            width: 10px; height: 10px;
-            border-bottom: 1px solid currentColor;
-            border-right: 1px solid currentColor;
-            transition: all 0.25s;
+        .btn-green:hover { background: #4f7a34; }
+
+        .btn-red {
+            background: var(--red);
+            color: #fff;
         }
 
-        .btn .bk {
-            position: absolute;
-            inset: 0;
-            pointer-events: none;
+        .btn-red:hover { background: #7e1c1c; }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid rgba(220,228,216,0.2);
+            color: rgba(220,228,216,0.65);
         }
 
-        .btn .bk::before {
-            content: '';
-            position: absolute;
-            top: 0; right: 0;
-            width: 10px; height: 10px;
-            border-top: 1px solid currentColor;
-            border-right: 1px solid currentColor;
-            transition: all 0.25s;
-        }
-
-        .btn .bk::after {
-            content: '';
-            position: absolute;
-            bottom: 0; left: 0;
-            width: 10px; height: 10px;
-            border-bottom: 1px solid currentColor;
-            border-left: 1px solid currentColor;
-            transition: all 0.25s;
-        }
-
-        .btn:hover::before, .btn:hover::after,
-        .btn:hover .bk::before, .btn:hover .bk::after {
-            width: 16px; height: 16px;
-        }
-
-        .btn-blue {
-            color: var(--accent);
-            background: rgba(77,159,255,0.06);
-        }
-
-        .btn-blue:hover { background: rgba(77,159,255,0.12); }
-
-        .btn-ghost {
-            color: rgba(232,237,245,0.6);
-            border: 1px solid var(--border);
-        }
-
-        .btn-ghost:hover {
+        .btn-outline:hover {
+            border-color: rgba(220,228,216,0.45);
             color: var(--text);
-            border-color: rgba(255,255,255,0.2);
         }
 
-        .btn-light {
-            color: var(--bg);
+        .btn-outline-green {
+            background: transparent;
+            border: 1px solid var(--green);
+            color: var(--green);
+        }
+
+        .btn-outline-green:hover {
+            background: var(--green-dim);
+        }
+
+        .btn-dark {
+            background: var(--bg);
+            color: var(--text);
+            border: 1px solid rgba(220,228,216,0.15);
+        }
+
+        .btn-dark:hover {
+            border-color: rgba(220,228,216,0.35);
         }
 
         /* ─── SECTION LABEL ─── */
@@ -223,7 +194,7 @@
             content: '';
             display: inline-block;
             width: 6px; height: 6px;
-            background: var(--accent);
+            background: var(--green);
             flex-shrink: 0;
         }
 
@@ -244,8 +215,8 @@
             position: absolute;
             inset: 0;
             background-image:
-                linear-gradient(rgba(77,159,255,0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(77,159,255,0.03) 1px, transparent 1px);
+                linear-gradient(rgba(90,138,60,0.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(90,138,60,0.04) 1px, transparent 1px);
             background-size: 60px 60px;
             pointer-events: none;
         }
@@ -267,7 +238,7 @@
             font-size: 0.62rem;
             letter-spacing: 0.2em;
             text-transform: uppercase;
-            color: var(--accent);
+            color: var(--green);
             margin-bottom: 1.5rem;
         }
 
@@ -282,7 +253,7 @@
 
         .hero-left h1 em {
             font-style: normal;
-            color: var(--accent);
+            color: var(--green);
         }
 
         .hero-left .sub {
@@ -316,10 +287,10 @@
             font-family: 'JetBrains Mono', monospace;
             font-size: 0.58rem;
             letter-spacing: 0.1em;
-            color: var(--accent);
-            background: rgba(6, 8, 16, 0.9);
+            color: var(--green);
+            background: rgba(7, 9, 12, 0.9);
             padding: 0.28rem 0.6rem;
-            border: 1px solid var(--border-hi);
+            border: 1px solid rgba(90,138,60,0.4);
         }
 
         @keyframes blink {
@@ -356,7 +327,7 @@
 
         .statement-text mark {
             background: transparent;
-            color: var(--accent);
+            color: var(--green);
         }
 
         /* ─── TWO-COL ─── */
@@ -461,8 +432,8 @@
             font-family: 'JetBrains Mono', monospace;
             font-size: 0.62rem;
             letter-spacing: 0.15em;
-            color: var(--accent);
-            border: 1px solid var(--border-hi);
+            color: #fff;
+            background: var(--red);
             padding: 0.3rem 0.75rem;
             margin-bottom: 1.75rem;
         }
@@ -531,7 +502,7 @@
             font-family: 'JetBrains Mono', monospace;
             font-size: 0.55rem;
             letter-spacing: 0.18em;
-            color: var(--accent);
+            color: var(--green);
             margin-bottom: 1rem;
         }
 
@@ -583,7 +554,7 @@
             font-family: 'JetBrains Mono', monospace;
             font-size: 0.58rem;
             letter-spacing: 0.16em;
-            color: var(--accent);
+            color: var(--green);
             margin-bottom: 1rem;
         }
 
@@ -654,7 +625,7 @@
             overflow: hidden;
         }
 
-        /* faint blue radial glow */
+        /* faint green radial glow */
         .cta-section::before {
             content: '';
             position: absolute;
@@ -663,7 +634,7 @@
             transform: translateX(-50%);
             width: 800px;
             height: 500px;
-            background: radial-gradient(ellipse, rgba(77,159,255,0.08) 0%, transparent 70%);
+            background: radial-gradient(ellipse, rgba(90,138,60,0.07) 0%, transparent 70%);
             pointer-events: none;
         }
 
@@ -688,7 +659,7 @@
 
         .cta-inner h2 em {
             font-style: normal;
-            color: var(--accent);
+            color: var(--green);
         }
 
         .cta-btns {
@@ -706,8 +677,8 @@
                 0deg,
                 transparent,
                 transparent 3px,
-                rgba(77,159,255,0.012) 3px,
-                rgba(77,159,255,0.012) 4px
+                rgba(90,138,60,0.015) 3px,
+                rgba(90,138,60,0.015) 4px
             );
             pointer-events: none;
         }
@@ -806,26 +777,20 @@
 <section class="hero">
     <div class="hero-inner">
         <div class="hero-left">
-            <div class="hero-eyebrow fade">MARS / MODULAR ADAPTIVE RANGED SYSTEMS</div>
+            <div class="hero-eyebrow fade">MARS / MODULAR AUTONOMOUS RANGED SYSTEM — v4.0</div>
             <h1 class="fade fade-d1">
-                Precision<br>at any<br><em>range.</em>
+                Sub-MOA.<br>H24. Any<br><em>platform.</em>
             </h1>
             <p class="sub fade fade-d2">
-                Real-time environmental compensation<br>
-                and intelligent stabilization for<br>
-                advanced long-range systems.<br>
-                The human operator always remains in control.
+                Système d'arme autonome HITL modulaire.<br>
+                Solveur 4DOF/6DOF adaptatif, tracking Kalman<br>
+                9 états, optronique EO/IR dual, IFF intégré.<br>
+                L'humain autorise. Le système exécute.
             </p>
             <div class="hero-btns fade fade-d3">
-                <a href="demo.html" class="btn btn-blue">
-                    <span class="bk"></span>Live Demo
-                </a>
-                <a href="#contact" class="btn btn-ghost">
-                    <span class="bk"></span>Contact Us
-                </a>
-                <a href="#" class="btn btn-ghost">
-                    <span class="bk"></span>White Paper
-                </a>
+                <a href="demo.html" class="btn btn-green">Live Demo</a>
+                <a href="#contact" class="btn btn-outline">Contact Us</a>
+                <a href="research.html" class="btn btn-outline">Research Paper</a>
             </div>
         </div>
 
@@ -834,67 +799,67 @@
                 <!-- grid -->
                 <defs>
                     <pattern id="pg" width="40" height="40" patternUnits="userSpaceOnUse">
-                        <path d="M40 0L0 0 0 40" fill="none" stroke="rgba(77,159,255,0.06)" stroke-width="0.5"/>
+                        <path d="M40 0L0 0 0 40" fill="none" stroke="rgba(90,138,60,0.06)" stroke-width="0.5"/>
                     </pattern>
                 </defs>
                 <rect width="100%" height="100%" fill="url(#pg)"/>
 
                 <!-- terrain -->
                 <polyline points="0,410 80,378 160,340 240,290 320,308 400,268 480,292 560,260 640,235"
-                    fill="none" stroke="rgba(77,159,255,0.22)" stroke-width="1.2"/>
+                    fill="none" stroke="rgba(90,138,60,0.22)" stroke-width="1.2"/>
                 <polyline points="0,440 80,408 160,370 240,320 320,338 400,298 480,322 560,290 640,265"
-                    fill="none" stroke="rgba(77,159,255,0.1)" stroke-width="0.9"/>
+                    fill="none" stroke="rgba(90,138,60,0.1)" stroke-width="0.9"/>
                 <polyline points="0,380 80,348 160,310 240,260 320,278 400,238 480,262 560,230 640,205"
-                    fill="none" stroke="rgba(77,159,255,0.15)" stroke-width="0.9"/>
+                    fill="none" stroke="rgba(90,138,60,0.15)" stroke-width="0.9"/>
                 <polyline points="0,350 80,318 160,280 240,230 320,248 400,208 480,232 560,200 640,175"
-                    fill="none" stroke="rgba(77,159,255,0.08)" stroke-width="0.7"/>
+                    fill="none" stroke="rgba(90,138,60,0.08)" stroke-width="0.7"/>
                 <polyline points="0,320 80,288 160,250 240,200 320,218 400,178 480,202 560,170 640,145"
-                    fill="none" stroke="rgba(77,159,255,0.06)" stroke-width="0.7"/>
+                    fill="none" stroke="rgba(90,138,60,0.06)" stroke-width="0.7"/>
 
                 <!-- verticals -->
-                <line x1="80"  y1="288" x2="80"  y2="460" stroke="rgba(77,159,255,0.05)" stroke-width="0.5"/>
-                <line x1="160" y1="250" x2="160" y2="460" stroke="rgba(77,159,255,0.05)" stroke-width="0.5"/>
-                <line x1="240" y1="200" x2="240" y2="460" stroke="rgba(77,159,255,0.05)" stroke-width="0.5"/>
-                <line x1="320" y1="218" x2="320" y2="460" stroke="rgba(77,159,255,0.05)" stroke-width="0.5"/>
-                <line x1="400" y1="178" x2="400" y2="460" stroke="rgba(77,159,255,0.05)" stroke-width="0.5"/>
-                <line x1="480" y1="202" x2="480" y2="460" stroke="rgba(77,159,255,0.05)" stroke-width="0.5"/>
-                <line x1="560" y1="170" x2="560" y2="460" stroke="rgba(77,159,255,0.05)" stroke-width="0.5"/>
+                <line x1="80"  y1="288" x2="80"  y2="460" stroke="rgba(90,138,60,0.05)" stroke-width="0.5"/>
+                <line x1="160" y1="250" x2="160" y2="460" stroke="rgba(90,138,60,0.05)" stroke-width="0.5"/>
+                <line x1="240" y1="200" x2="240" y2="460" stroke="rgba(90,138,60,0.05)" stroke-width="0.5"/>
+                <line x1="320" y1="218" x2="320" y2="460" stroke="rgba(90,138,60,0.05)" stroke-width="0.5"/>
+                <line x1="400" y1="178" x2="400" y2="460" stroke="rgba(90,138,60,0.05)" stroke-width="0.5"/>
+                <line x1="480" y1="202" x2="480" y2="460" stroke="rgba(90,138,60,0.05)" stroke-width="0.5"/>
+                <line x1="560" y1="170" x2="560" y2="460" stroke="rgba(90,138,60,0.05)" stroke-width="0.5"/>
 
                 <!-- trajectory arc -->
                 <path d="M 60,400 Q 320,80 580,270"
-                    fill="none" stroke="rgba(77,159,255,0.35)" stroke-width="1.2"
+                    fill="none" stroke="rgba(90,138,60,0.35)" stroke-width="1.2"
                     stroke-dasharray="6,3"/>
 
                 <!-- reticle -->
                 <rect x="566" y="258" width="28" height="28"
-                    fill="none" stroke="rgba(77,159,255,0.9)" stroke-width="1.5"/>
+                    fill="none" stroke="rgba(155,35,35,0.9)" stroke-width="1.5"/>
                 <line x1="566" y1="272" x2="558" y2="272"
-                    stroke="rgba(77,159,255,0.9)" stroke-width="1"/>
+                    stroke="rgba(155,35,35,0.9)" stroke-width="1"/>
                 <line x1="594" y1="272" x2="602" y2="272"
-                    stroke="rgba(77,159,255,0.9)" stroke-width="1"/>
+                    stroke="rgba(155,35,35,0.9)" stroke-width="1"/>
                 <line x1="580" y1="258" x2="580" y2="250"
-                    stroke="rgba(77,159,255,0.9)" stroke-width="1"/>
+                    stroke="rgba(155,35,35,0.9)" stroke-width="1"/>
                 <line x1="580" y1="286" x2="580" y2="294"
-                    stroke="rgba(77,159,255,0.9)" stroke-width="1"/>
+                    stroke="rgba(155,35,35,0.9)" stroke-width="1"/>
                 <circle cx="580" cy="272" r="3"
-                    fill="rgba(77,159,255,1)" class="blink"/>
+                    fill="rgba(155,35,35,1)" class="blink"/>
 
                 <!-- launch point -->
                 <circle cx="60" cy="400" r="4"
-                    fill="none" stroke="rgba(77,159,255,0.5)" stroke-width="1"/>
+                    fill="none" stroke="rgba(90,138,60,0.6)" stroke-width="1"/>
                 <circle cx="60" cy="400" r="1.5"
-                    fill="rgba(77,159,255,0.6)"/>
+                    fill="rgba(90,138,60,0.8)"/>
 
                 <!-- range annotation -->
                 <line x1="60" y1="430" x2="580" y2="430"
-                    stroke="rgba(77,159,255,0.15)" stroke-width="0.7"/>
+                    stroke="rgba(90,138,60,0.15)" stroke-width="0.7"/>
                 <line x1="60"  y1="426" x2="60"  y2="434"
-                    stroke="rgba(77,159,255,0.3)" stroke-width="0.7"/>
+                    stroke="rgba(90,138,60,0.3)" stroke-width="0.7"/>
                 <line x1="580" y1="426" x2="580" y2="434"
-                    stroke="rgba(77,159,255,0.3)" stroke-width="0.7"/>
+                    stroke="rgba(90,138,60,0.3)" stroke-width="0.7"/>
                 <text x="320" y="444"
                     font-family="monospace" font-size="7"
-                    fill="rgba(77,159,255,0.4)" text-anchor="middle">
+                    fill="rgba(90,138,60,0.4)" text-anchor="middle">
                     EFFECTIVE RANGE
                 </text>
             </svg>
@@ -911,10 +876,10 @@
     <div class="statement-inner fade">
         <div class="label">What We Do</div>
         <p class="statement-text">
-            MARS builds AI-powered precision assistance platforms that
-            <mark>compensate for environmental variability</mark> in real time —
-            enabling operators to engage with <mark>maximum accuracy</mark>
-            under any conditions.
+            MARS est un système d'arme autonome <mark>Human-In-The-Loop</mark> conçu pour le déploiement
+            sur toute plateforme — drone, véhicule, hélicoptère, fixe —
+            avec interchangeabilité d'arme sur le terrain et
+            <mark>précision sub-MOA en régime supersonique.</mark>
         </p>
     </div>
 </section>
@@ -928,28 +893,26 @@
             <svg width="55%" height="55%" viewBox="0 0 200 160"
                 style="position:relative;z-index:1;opacity:0.6;">
                 <circle cx="100" cy="80" r="62" fill="none"
-                    stroke="rgba(77,159,255,0.15)" stroke-width="1"/>
+                    stroke="rgba(90,138,60,0.15)" stroke-width="1"/>
                 <circle cx="100" cy="80" r="42" fill="none"
-                    stroke="rgba(77,159,255,0.12)" stroke-width="1"/>
+                    stroke="rgba(90,138,60,0.12)" stroke-width="1"/>
                 <circle cx="100" cy="80" r="20" fill="none"
-                    stroke="rgba(77,159,255,0.6)" stroke-width="1.5"/>
+                    stroke="rgba(90,138,60,0.6)" stroke-width="1.5"/>
                 <circle cx="100" cy="80" r="4"
-                    fill="rgba(77,159,255,0.9)" class="blink"/>
+                    fill="rgba(90,138,60,0.9)" class="blink"/>
                 <line x1="38" y1="80" x2="162" y2="80"
-                    stroke="rgba(77,159,255,0.08)" stroke-width="0.6"/>
+                    stroke="rgba(90,138,60,0.08)" stroke-width="0.6"/>
                 <line x1="100" y1="18" x2="100" y2="142"
-                    stroke="rgba(77,159,255,0.08)" stroke-width="0.6"/>
+                    stroke="rgba(90,138,60,0.08)" stroke-width="0.6"/>
             </svg>
             <div class="vis-label">SENSOR FUSION — REAL-TIME</div>
         </div>
 
         <div class="col-text fade fade-d1">
-            <div class="label">The Challenge</div>
-            <h2>Environmental uncertainty degrades precision at every range.</h2>
-            <p>Wind drift, atmospheric pressure, temperature gradients, platform instability — these factors introduce cumulative error. MARS transforms raw sensor data into actionable intelligence that eliminates uncertainty at the point of engagement.</p>
-            <a href="#contact" class="btn btn-blue">
-                <span class="bk"></span>Request Demo
-            </a>
+            <div class="label">Philosophie HITL</div>
+            <h2>L'humain autorise. Le système exécute.</h2>
+            <p>MARS est strictement HITL — aucun tir sans autorisation explicite de l'opérateur (étape AUTH) et sans validation IFF. Le système ne tire jamais sans les deux conditions validées. La conformité HITL est non-overridable et certifiable.</p>
+            <a href="#contact" class="btn btn-outline-green">Demander un briefing</a>
         </div>
     </div>
 </section>
@@ -959,31 +922,31 @@
 <section class="how" id="platform">
     <div class="how-inner">
         <div class="how-header fade">
-            <div class="label">How It Works</div>
-            <h2>How the system operates</h2>
+            <div class="label">Séquence d'engagement</div>
+            <h2>10 étapes, de SAFE à BDA</h2>
         </div>
 
         <div class="step">
             <div class="step-text fade">
-                <div class="step-num">01 — SENSOR FUSION</div>
-                <h3>Unified State Estimation</h3>
-                <p>Integrates multi-source environmental data — GPS, IMU, barometric, thermal — into a single coherent state vector updated at sensor rate.</p>
+                <div class="step-num">01-03 — SCAN / DETECT</div>
+                <h3>Détection & Fusion Capteurs</h3>
+                <p>Flux EO/IR dual activé. Le pipeline CV détecte les cibles potentielles. Fusion IMU + GPS/INS + baro + LRF dans un vecteur d'état à 9 composantes, mis à jour en continu par le filtre de Kalman.</p>
             </div>
             <div class="step-visual fade fade-d1">
                 <div class="grid-bg"></div>
                 <svg width="70%" height="70%" viewBox="0 0 240 160"
                     style="position:relative;z-index:1;opacity:0.6;">
-                    <rect x="8" y="8"   width="58" height="30" fill="none" stroke="rgba(77,159,255,0.25)" stroke-width="1"/>
-                    <rect x="8" y="58"  width="58" height="30" fill="none" stroke="rgba(77,159,255,0.25)" stroke-width="1"/>
-                    <rect x="8" y="108" width="58" height="30" fill="none" stroke="rgba(77,159,255,0.25)" stroke-width="1"/>
-                    <text x="37" y="27"  font-family="monospace" font-size="8" fill="rgba(77,159,255,0.5)" text-anchor="middle">GPS</text>
-                    <text x="37" y="77"  font-family="monospace" font-size="8" fill="rgba(77,159,255,0.5)" text-anchor="middle">IMU</text>
-                    <text x="37" y="127" font-family="monospace" font-size="8" fill="rgba(77,159,255,0.5)" text-anchor="middle">BARO</text>
-                    <line x1="66" y1="23"  x2="140" y2="78" stroke="rgba(77,159,255,0.35)" stroke-width="1"/>
-                    <line x1="66" y1="73"  x2="140" y2="78" stroke="rgba(77,159,255,0.35)" stroke-width="1"/>
-                    <line x1="66" y1="123" x2="140" y2="78" stroke="rgba(77,159,255,0.35)" stroke-width="1"/>
-                    <rect x="140" y="58" width="82" height="40" fill="rgba(77,159,255,0.07)" stroke="rgba(77,159,255,0.5)" stroke-width="1"/>
-                    <text x="181" y="81" font-family="monospace" font-size="7" fill="rgba(77,159,255,0.8)" text-anchor="middle">STATE VECTOR</text>
+                    <rect x="8" y="8"   width="58" height="30" fill="none" stroke="rgba(90,138,60,0.25)" stroke-width="1"/>
+                    <rect x="8" y="58"  width="58" height="30" fill="none" stroke="rgba(90,138,60,0.25)" stroke-width="1"/>
+                    <rect x="8" y="108" width="58" height="30" fill="none" stroke="rgba(90,138,60,0.25)" stroke-width="1"/>
+                    <text x="37" y="27"  font-family="monospace" font-size="8" fill="rgba(90,138,60,0.5)" text-anchor="middle">GPS</text>
+                    <text x="37" y="77"  font-family="monospace" font-size="8" fill="rgba(90,138,60,0.5)" text-anchor="middle">IMU</text>
+                    <text x="37" y="127" font-family="monospace" font-size="8" fill="rgba(90,138,60,0.5)" text-anchor="middle">BARO</text>
+                    <line x1="66" y1="23"  x2="140" y2="78" stroke="rgba(90,138,60,0.35)" stroke-width="1"/>
+                    <line x1="66" y1="73"  x2="140" y2="78" stroke="rgba(90,138,60,0.35)" stroke-width="1"/>
+                    <line x1="66" y1="123" x2="140" y2="78" stroke="rgba(90,138,60,0.35)" stroke-width="1"/>
+                    <rect x="140" y="58" width="82" height="40" fill="rgba(90,138,60,0.07)" stroke="rgba(90,138,60,0.5)" stroke-width="1"/>
+                    <text x="181" y="81" font-family="monospace" font-size="7" fill="rgba(90,138,60,0.8)" text-anchor="middle">STATE VECTOR</text>
                 </svg>
             </div>
         </div>
@@ -999,22 +962,22 @@
                     <line x1="82" y1="62" x2="110" y2="47" stroke="rgba(232,237,245,0.2)" stroke-width="1"/>
                     <polygon points="110,44 116,52 105,52" fill="rgba(232,237,245,0.2)"/>
                     <text x="80" y="74" font-family="monospace" font-size="6.5" fill="rgba(232,237,245,0.2)">WIND 8m/s</text>
-                    <circle cx="223" cy="105" r="9" fill="none" stroke="rgba(77,159,255,0.8)" stroke-width="1.5"/>
-                    <circle cx="223" cy="105" r="3" fill="rgba(77,159,255,0.9)"/>
+                    <circle cx="223" cy="105" r="9" fill="none" stroke="rgba(90,138,60,0.8)" stroke-width="1.5"/>
+                    <circle cx="223" cy="105" r="3" fill="rgba(90,138,60,0.9)"/>
                 </svg>
             </div>
             <div class="step-text fade fade-d1">
-                <div class="step-num">02 — PREDICTIVE MODELING</div>
-                <h3>Hybrid Physics + AI Computation</h3>
-                <p>Real-time atmospheric and ballistic modeling combines classical numerical simulation with embedded AI inference — enabling deterministic accuracy under dynamic conditions.</p>
+                <div class="step-num">04-05 — CLASSIFY / IFF</div>
+                <h3>Identification & Qualification de Cible</h3>
+                <p>IFF tripartite : Mode 5 électronique, marqueurs IR actifs, classification CV par réseau de neurones embarqué. Vérification ROE automatique. Aucun tir possible sans IFF validé sur les 3 couches.</p>
             </div>
         </div>
 
         <div class="step">
             <div class="step-text fade">
-                <div class="step-num">03 — STABILIZATION</div>
-                <h3>Adaptive Stabilization Layer</h3>
-                <p>Intelligent compensation algorithms eliminate platform motion, vibration, and drift. The operator sees a stable solution — the system handles the complexity.</p>
+                <div class="step-num">06-07 — LOCK / SOLUTION</div>
+                <h3>Solveur Balistique Adaptatif</h3>
+                <p>Tracking Kalman 9 états sur la cible verrouillée. Solveur 4DOF/6DOF adaptatif : correction vent, densité d'air, effet Coriolis, vitesse plateforme. Navigation GPS-deniée par INS + odométrie visuelle. Solution de tir en &lt;200 ms.</p>
             </div>
             <div class="step-visual fade fade-d1">
                 <div class="grid-bg"></div>
@@ -1024,8 +987,8 @@
                     <text x="58" y="120" font-family="monospace" font-size="6.5" fill="rgba(255,90,90,0.4)" text-anchor="middle">RAW</text>
                     <polyline points="132,80 152,78 172,81 192,79 212,80 232,80" fill="none" stroke="rgba(0,212,200,0.65)" stroke-width="1.5"/>
                     <text x="182" y="120" font-family="monospace" font-size="6.5" fill="rgba(0,212,200,0.6)" text-anchor="middle">STABILIZED</text>
-                    <line x1="113" y1="75" x2="128" y2="75" stroke="rgba(77,159,255,0.7)" stroke-width="1.5"/>
-                    <polygon points="128,72 134,75 128,78" fill="rgba(77,159,255,0.7)"/>
+                    <line x1="113" y1="75" x2="128" y2="75" stroke="rgba(90,138,60,0.7)" stroke-width="1.5"/>
+                    <polygon points="128,72 134,75 128,78" fill="rgba(90,138,60,0.7)"/>
                 </svg>
             </div>
         </div>
@@ -1035,18 +998,18 @@
                 <div class="grid-bg"></div>
                 <svg width="70%" height="70%" viewBox="0 0 240 160"
                     style="position:relative;z-index:1;opacity:0.6;">
-                    <path d="M 55,80 A 55,48 0 1 1 55,81" fill="none" stroke="rgba(77,159,255,0.12)" stroke-width="1" stroke-dasharray="3,3"/>
-                    <rect x="88" y="60" width="64" height="40" fill="rgba(77,159,255,0.07)" stroke="rgba(77,159,255,0.4)" stroke-width="1"/>
-                    <text x="120" y="84" font-family="monospace" font-size="7" fill="rgba(77,159,255,0.75)" text-anchor="middle">AI MODEL</text>
-                    <line x1="152" y1="80" x2="178" y2="80" stroke="rgba(77,159,255,0.4)" stroke-width="1.2"/>
-                    <polygon points="178,77 184,80 178,83" fill="rgba(77,159,255,0.4)"/>
+                    <path d="M 55,80 A 55,48 0 1 1 55,81" fill="none" stroke="rgba(90,138,60,0.12)" stroke-width="1" stroke-dasharray="3,3"/>
+                    <rect x="88" y="60" width="64" height="40" fill="rgba(90,138,60,0.07)" stroke="rgba(90,138,60,0.4)" stroke-width="1"/>
+                    <text x="120" y="84" font-family="monospace" font-size="7" fill="rgba(90,138,60,0.75)" text-anchor="middle">AI MODEL</text>
+                    <line x1="152" y1="80" x2="178" y2="80" stroke="rgba(90,138,60,0.4)" stroke-width="1.2"/>
+                    <polygon points="178,77 184,80 178,83" fill="rgba(90,138,60,0.4)"/>
                     <text x="196" y="76" font-family="monospace" font-size="6" fill="rgba(232,237,245,0.3)" text-anchor="middle">UPDATE</text>
                 </svg>
             </div>
             <div class="step-text fade fade-d1">
-                <div class="step-num">04 — POST-ACTION ANALYTICS</div>
-                <h3>Closed-Loop Learning</h3>
-                <p>Every engagement feeds back into the system. Post-action data drives continuous model refinement, improving accuracy across operational conditions over time.</p>
+                <div class="step-num">08-10 — AUTH / FIRE / BDA</div>
+                <h3>Tir Autorisé & Battle Damage Assessment</h3>
+                <p>Autorisation opérateur obligatoire (HITL non-overridable). Tir sur confirmation explicite. BDA automatique post-engagement : évaluation des dommages, mise à jour du tableau de situation, compte-rendu signé AES-256.</p>
             </div>
         </div>
     </div>
@@ -1058,28 +1021,28 @@
     <div class="tech-inner">
         <div class="fade">
             <div class="label">Technology</div>
-            <h2>Hybrid Physics + AI Architecture</h2>
+            <h2>Architecture Modulaire & Temps Réel</h2>
         </div>
         <div class="tech-grid fade fade-d1">
             <div class="tech-item">
                 <div class="tech-item-num">T-01</div>
-                <h4>Real-Time Embedded Computation</h4>
-                <p>Optimized for low-latency processing on constrained hardware. Sub-millisecond update cycles at the point of action.</p>
+                <h4>Solveur Balistique 4DOF / 6DOF</h4>
+                <p>Solveur adaptatif 4DOF (translation + rotation) switchant en 6DOF sous charge asymétrique. Modélisation atmosphérique temps réel : vent, densité, température, effet Coriolis. Précision sub-MOA à 1 500 m depuis tripode fixe.</p>
             </div>
             <div class="tech-item">
                 <div class="tech-item-num">T-02</div>
-                <h4>Simulation-Driven Modeling</h4>
-                <p>Physics-based models validated through extensive simulation and field testing. No black-box guessing.</p>
+                <h4>Tracking Kalman 9 États</h4>
+                <p>Filtre de Kalman étendu 9 états : position, vitesse, accélération, attitude. Fusion IMU + GPS/INS + baro + LRF. Navigation GPS-deniée par INS couplé à l'odométrie visuelle. Maintien de piste ≥ 30 cibles simultanées.</p>
             </div>
             <div class="tech-item">
                 <div class="tech-item-num">T-03</div>
-                <h4>Edge AI Compatibility</h4>
-                <p>Lightweight neural models deployable on ARM, FPGA, and specialized accelerators without cloud dependency.</p>
+                <h4>Optronique EO/IR Dual-Chain</h4>
+                <p>Capteur EO jour et IR nuit commutables. Pipeline CV embarqué sur FPGA : détection, classification, suivi. Fonctionnement H24, tous temps. Stabilisation optique 3 axes découplée de la plateforme.</p>
             </div>
             <div class="tech-item">
                 <div class="tech-item-num">T-04</div>
-                <h4>Scalable SDK Integration</h4>
-                <p>Modular API designed for rapid integration with diverse system architectures. Minimal footprint, maximum impact.</p>
+                <h4>IFF Tripartite & Cybersécurité</h4>
+                <p>IFF 3 couches : Mode 5 électronique, marqueurs IR actifs, classification CV. Chiffrement AES-256-GCM, authentification multi-facteur, anti-spoofing GPS, protection TEMPEST. Conformité MIL-STD-461G, DO-178C DAL-B.</p>
             </div>
         </div>
     </div>
@@ -1090,29 +1053,29 @@
 <section class="apps">
     <div class="apps-inner">
         <div class="fade">
-            <div class="label">Applications</div>
-            <h2>Dual-Use Precision Intelligence</h2>
+            <div class="label">Plateformes</div>
+            <h2>Une architecture, toute plateforme.</h2>
         </div>
         <div class="apps-grid fade fade-d1">
             <div class="app-card">
                 <div class="app-card-num">01</div>
-                <h4>Defense Systems Integration</h4>
-                <p>Enhances precision and operator effectiveness in advanced targeting platforms.</p>
+                <h4>Tripode / Fixe</h4>
+                <p>Installation au sol ou en bâtiment. Performance nominale : sub-MOA à 1 500 m. Armes 7,62 MAG à .50 BMG / 20 mm. Module POWER autonome, déploiement &lt; 15 min.</p>
             </div>
             <div class="app-card">
                 <div class="app-card-num">02</div>
-                <h4>Advanced Optical Platforms</h4>
-                <p>Stabilization and tracking for long-range observation and reconnaissance systems.</p>
+                <h4>Véhicule</h4>
+                <p>Intégration sur véhicule à roues ou chenillé. Stabilisation 3 axes découplée du roulis chassis. Compensation vitesse plateforme en temps réel. Interface MIL-STD-1553 / CAN bus.</p>
             </div>
             <div class="app-card">
                 <div class="app-card-num">03</div>
-                <h4>Simulation & Training</h4>
-                <p>Realistic environmental modeling for training simulators and virtual testing.</p>
+                <h4>Drone Tactique</h4>
+                <p>Masse totale système optimisée. Alimentation sur bus drone. Liaison datalink chiffrée AES-256. Autonomie de mission H24 avec module IR nocturne et navigation GPS-deniée.</p>
             </div>
             <div class="app-card">
                 <div class="app-card-num">04</div>
-                <h4>Industrial Monitoring</h4>
-                <p>Precision measurement and control for infrastructure, energy, and surveying.</p>
+                <h4>Hélicoptère</h4>
+                <p>Fixation sur pylône ou tourelle ventrale. Compensation Doppler et vibrations rotor intégrée. Certifiable DO-178C DAL-B. Compatibilité plateformes existantes via module GIMBAL dédié.</p>
             </div>
         </div>
     </div>
@@ -1124,15 +1087,17 @@
     <div class="team-inner">
         <div class="team-left fade">
             <div class="label">Team</div>
-            <h2>Built by engineers,<br>for operators.</h2>
-            <p>MARS is developed by a team with deep expertise in real-time embedded systems, numerical simulation, AI modeling, and systems architecture.</p>
+            <h2>Construit par des ingénieurs,<br>pour des opérateurs.</h2>
+            <p>MARS est développé par une équipe pluridisciplinaire couvrant les systèmes embarqués temps réel, la balistique, l'optronique, la cybersécurité et l'intégration plateforme défense.</p>
             <div class="skill-tags">
-                <span class="skill-tag">Embedded Systems</span>
-                <span class="skill-tag">Numerical Simulation</span>
-                <span class="skill-tag">AI Modeling</span>
-                <span class="skill-tag">Control Theory</span>
-                <span class="skill-tag">Signal Processing</span>
-                <span class="skill-tag">Systems Architecture</span>
+                <span class="skill-tag">Systèmes Embarqués</span>
+                <span class="skill-tag">Balistique Externe</span>
+                <span class="skill-tag">Optronique EO/IR</span>
+                <span class="skill-tag">Filtrage de Kalman</span>
+                <span class="skill-tag">Vision par Ordinateur</span>
+                <span class="skill-tag">Cybersécurité MIL</span>
+                <span class="skill-tag">Architecture Système</span>
+                <span class="skill-tag">DO-178C / MIL-STD</span>
             </div>
         </div>
 
@@ -1141,13 +1106,13 @@
             <svg width="52%" height="52%" viewBox="0 0 200 200"
                 style="position:relative;z-index:1;opacity:0.4;">
                 <polygon points="100,15 182,57 182,143 100,185 18,143 18,57"
-                    fill="none" stroke="rgba(77,159,255,0.3)" stroke-width="1"/>
+                    fill="none" stroke="rgba(90,138,60,0.3)" stroke-width="1"/>
                 <polygon points="100,48 152,78 152,122 100,152 48,122 48,78"
                     fill="none" stroke="rgba(0,212,200,0.35)" stroke-width="1"/>
                 <circle cx="100" cy="100" r="22"
-                    fill="none" stroke="rgba(77,159,255,0.6)" stroke-width="1.5"/>
+                    fill="none" stroke="rgba(90,138,60,0.6)" stroke-width="1.5"/>
                 <circle cx="100" cy="100" r="4"
-                    fill="rgba(77,159,255,0.9)" class="blink"/>
+                    fill="rgba(90,138,60,0.9)" class="blink"/>
             </svg>
             <div class="vis-label">MARS — SYSTEMS ENGINEERING</div>
         </div>
@@ -1160,20 +1125,14 @@
     <div class="scan-lines"></div>
     <div class="cta-inner">
         <h2>
-            Adaptive, deployable<br>
-            <em>precision intelligence</em><br>
-            for the threats<br>that exist today.
+            Modulaire, déployable,<br>
+            <em>sub-MOA.</em><br>
+            Sur toute plateforme,<br>H24.
         </h2>
         <div class="cta-btns">
-            <a href="mailto:contact@mars-systems.eu" class="btn btn-blue">
-                <span class="bk"></span>Contact Us
-            </a>
-            <a href="#" class="btn btn-ghost">
-                <span class="bk"></span>White Paper
-            </a>
-            <a href="demo.html" class="btn btn-ghost">
-                <span class="bk"></span>Live Demo
-            </a>
+            <a href="mailto:contact@mars-systems.eu" class="btn btn-green">Contact Us</a>
+            <a href="research.html" class="btn btn-dark">Research Paper</a>
+            <a href="demo.html" class="btn btn-dark">Live Demo</a>
         </div>
     </div>
 </section>
@@ -1183,7 +1142,7 @@
 <footer>
     <div class="footer-inner">
         <div>
-            <div class="footer-brand">MARS — Modular Adaptive Ranged Systems</div>
+            <div class="footer-brand">MARS — Modular Autonomous Ranged System</div>
             <div class="footer-contact">contact@mars-systems.eu · Europe</div>
         </div>
         <div class="footer-right">© 2026 MARS. All rights reserved.</div>
