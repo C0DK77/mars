@@ -727,6 +727,28 @@
         .fade-d2 { transition-delay: 0.2s; }
         .fade-d3 { transition-delay: 0.3s; }
 
+        /* ─── LANG SWITCHER ─── */
+        .lang-switcher {
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
+            margin-right: 0.75rem;
+        }
+        .lang-btn {
+            background: none;
+            border: none;
+            color: var(--muted);
+            cursor: pointer;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.68rem;
+            letter-spacing: 0.1em;
+            padding: 0.2rem 0.25rem;
+            transition: color 0.2s;
+        }
+        .lang-btn:hover { color: var(--text); }
+        .lang-btn.active { color: var(--green); }
+        .lang-sep { color: var(--border); font-size: 0.7rem; }
+
         /* ─── RESPONSIVE ─── */
         @media (max-width: 960px) {
             .hero-inner, .two-col-inner,
@@ -763,13 +785,18 @@
     </a>
 
     <ul class="nav-links">
-        <li><a href="#">Home</a></li>
-        <li><a href="#platform">Platform</a></li>
-        <li><a href="#technology">Technology</a></li>
-        <li><a href="#team">Team</a></li>
+        <li><a href="#" data-i18n="nav-home">Home</a></li>
+        <li><a href="#platform" data-i18n="nav-platform">Platform</a></li>
+        <li><a href="#technology" data-i18n="nav-technology">Technology</a></li>
+        <li><a href="#team" data-i18n="nav-team">Team</a></li>
     </ul>
 
-    <a href="https://demo.mars-system.eu" class="nav-cta">Live Demo</a>
+    <div class="lang-switcher">
+        <button class="lang-btn active" id="btn-en" data-lang="en">EN</button>
+        <span class="lang-sep">|</span>
+        <button class="lang-btn" id="btn-fr" data-lang="fr">FR</button>
+    </div>
+    <a href="https://demo.mars-system.eu" class="nav-cta" data-i18n="nav-demo">Demo</a>
 </nav>
 
 
@@ -777,20 +804,20 @@
 <section class="hero">
     <div class="hero-inner">
         <div class="hero-left">
-            <div class="hero-eyebrow fade">MARS / MODULAR AUTONOMOUS RANGED SYSTEM — v4.0</div>
-            <h1 class="fade fade-d1">
-                Sub-MOA.<br>H24. Any<br><em>platform.</em>
+            <div class="hero-eyebrow fade" data-i18n="hero-eyebrow">MARS SYSTEMS · Autonomous Defence Precision</div>
+            <h1 class="fade fade-d1" data-i18n="hero-h1">
+                Modular<br>Autonomous<br><em>Ranged Systems.</em>
             </h1>
-            <p class="sub fade fade-d2">
-                Système d'arme autonome HITL modulaire.<br>
-                Solveur 4DOF/6DOF adaptatif, tracking Kalman<br>
-                9 états, optronique EO/IR dual, IFF intégré.<br>
-                L'humain autorise. Le système exécute.
+            <p class="sub fade fade-d2" data-i18n="hero-sub">
+                Modular HITL autonomous weapon system.<br>
+                Adaptive 4DOF/6DOF solver, 9-state Kalman tracking,<br>
+                EO/IR dual optronics, integrated IFF.<br>
+                The human authorizes. The system executes.
             </p>
             <div class="hero-btns fade fade-d3">
-                <a href="https://demo.mars-system.eu" class="btn btn-green">Live Demo</a>
-                <a href="#contact" class="btn btn-outline">Contact Us</a>
-                <a href="research.html" class="btn btn-outline">Research Paper</a>
+                <a href="https://demo.mars-system.eu" class="btn btn-green" data-i18n="hero-demo">Demo</a>
+                <a href="#contact" class="btn btn-outline" data-i18n="hero-contact">Contact Us</a>
+                <a href="research.html" class="btn btn-outline" data-i18n="hero-research">Research Paper</a>
             </div>
         </div>
 
@@ -874,12 +901,9 @@
 <!-- ─── WHAT WE DO ─── -->
 <section class="statement">
     <div class="statement-inner fade">
-        <div class="label">What We Do</div>
-        <p class="statement-text">
-            MARS est un système d'arme autonome <mark>Human-In-The-Loop</mark> conçu pour le déploiement
-            sur toute plateforme — drone, véhicule, hélicoptère, fixe —
-            avec interchangeabilité d'arme sur le terrain et
-            <mark>précision sub-MOA en régime supersonique.</mark>
+        <div class="label" data-i18n="what-label">What We Do</div>
+        <p class="statement-text" data-i18n="what-text">
+            MARS is a <mark>Human-In-The-Loop</mark> autonomous weapon system designed for deployment on any platform — drone, vehicle, helicopter, fixed — with field weapon interchangeability and <mark>sub-MOA precision at supersonic velocity.</mark>
         </p>
     </div>
 </section>
@@ -909,10 +933,10 @@
         </div>
 
         <div class="col-text fade fade-d1">
-            <div class="label">Philosophie HITL</div>
-            <h2>L'humain autorise. Le système exécute.</h2>
-            <p>MARS est strictement HITL — aucun tir sans autorisation explicite de l'opérateur (étape AUTH) et sans validation IFF. Le système ne tire jamais sans les deux conditions validées. La conformité HITL est non-overridable et certifiable.</p>
-            <a href="#contact" class="btn btn-outline-green">Demander un briefing</a>
+            <div class="label" data-i18n="hitl-label">HITL Philosophy</div>
+            <h2 data-i18n="hitl-h2">The human authorizes. The system executes.</h2>
+            <p data-i18n="hitl-p">MARS is strictly HITL — no fire without explicit operator authorization (AUTH step) and without IFF validation. The system never fires without both conditions validated. HITL compliance is non-overridable and certifiable.</p>
+            <a href="#contact" class="btn btn-outline-green" data-i18n="hitl-btn">Request a Briefing</a>
         </div>
     </div>
 </section>
@@ -922,15 +946,15 @@
 <section class="how" id="platform">
     <div class="how-inner">
         <div class="how-header fade">
-            <div class="label">Séquence d'engagement</div>
-            <h2>10 étapes, de SAFE à BDA</h2>
+            <div class="label" data-i18n="how-label">Engagement Sequence</div>
+            <h2 data-i18n="how-h2">10 Steps, from SAFE to BDA</h2>
         </div>
 
         <div class="step">
             <div class="step-text fade">
-                <div class="step-num">01-03 — SCAN / DETECT</div>
-                <h3>Détection & Fusion Capteurs</h3>
-                <p>Flux EO/IR dual activé. Le pipeline CV détecte les cibles potentielles. Fusion IMU + GPS/INS + baro + LRF dans un vecteur d'état à 9 composantes, mis à jour en continu par le filtre de Kalman.</p>
+                <div class="step-num" data-i18n="step1-num">01-03 — SCAN / DETECT</div>
+                <h3 data-i18n="step1-h3">Detection & Sensor Fusion</h3>
+                <p data-i18n="step1-p">Dual EO/IR feed activated. CV pipeline detects potential targets. IMU + GPS/INS + baro + LRF fusion into a 9-component state vector, continuously updated by the Kalman filter.</p>
             </div>
             <div class="step-visual fade fade-d1">
                 <div class="grid-bg"></div>
@@ -967,17 +991,17 @@
                 </svg>
             </div>
             <div class="step-text fade fade-d1">
-                <div class="step-num">04-05 — CLASSIFY / IFF</div>
-                <h3>Identification & Qualification de Cible</h3>
-                <p>IFF tripartite : Mode 5 électronique, marqueurs IR actifs, classification CV par réseau de neurones embarqué. Vérification ROE automatique. Aucun tir possible sans IFF validé sur les 3 couches.</p>
+                <div class="step-num" data-i18n="step2-num">04-05 — CLASSIFY / IFF</div>
+                <h3 data-i18n="step2-h3">Target Identification & Qualification</h3>
+                <p data-i18n="step2-p">Tripartite IFF: Mode 5 electronic, active IR markers, CV classification by embedded neural network. Automatic ROE verification. No fire possible without IFF validated on all 3 layers.</p>
             </div>
         </div>
 
         <div class="step">
             <div class="step-text fade">
-                <div class="step-num">06-07 — LOCK / SOLUTION</div>
-                <h3>Solveur Balistique Adaptatif</h3>
-                <p>Tracking Kalman 9 états sur la cible verrouillée. Solveur 4DOF/6DOF adaptatif : correction vent, densité d'air, effet Coriolis, vitesse plateforme. Navigation GPS-deniée par INS + odométrie visuelle. Solution de tir en &lt;200 ms.</p>
+                <div class="step-num" data-i18n="step3-num">06-07 — LOCK / SOLUTION</div>
+                <h3 data-i18n="step3-h3">Adaptive Ballistic Solver</h3>
+                <p data-i18n="step3-p">9-state Kalman tracking on locked target. Adaptive 4DOF/6DOF solver: wind correction, air density, Coriolis effect, platform velocity. GPS-denied navigation by INS + visual odometry. Fire solution in &lt;200 ms.</p>
             </div>
             <div class="step-visual fade fade-d1">
                 <div class="grid-bg"></div>
@@ -1007,9 +1031,9 @@
                 </svg>
             </div>
             <div class="step-text fade fade-d1">
-                <div class="step-num">08-10 — AUTH / FIRE / BDA</div>
-                <h3>Tir Autorisé & Battle Damage Assessment</h3>
-                <p>Autorisation opérateur obligatoire (HITL non-overridable). Tir sur confirmation explicite. BDA automatique post-engagement : évaluation des dommages, mise à jour du tableau de situation, compte-rendu signé AES-256.</p>
+                <div class="step-num" data-i18n="step4-num">08-10 — AUTH / FIRE / BDA</div>
+                <h3 data-i18n="step4-h3">Authorized Fire & Battle Damage Assessment</h3>
+                <p data-i18n="step4-p">Mandatory operator authorization (non-overridable HITL). Fire on explicit confirmation. Automatic post-engagement BDA: damage assessment, situation report update, AES-256 signed report.</p>
             </div>
         </div>
     </div>
@@ -1020,29 +1044,29 @@
 <section class="tech" id="technology">
     <div class="tech-inner">
         <div class="fade">
-            <div class="label">Technology</div>
-            <h2>Architecture Modulaire & Temps Réel</h2>
+            <div class="label" data-i18n="tech-label">Technology</div>
+            <h2 data-i18n="tech-h2">Modular Real-Time Architecture</h2>
         </div>
         <div class="tech-grid fade fade-d1">
             <div class="tech-item">
                 <div class="tech-item-num">T-01</div>
-                <h4>Solveur Balistique 4DOF / 6DOF</h4>
-                <p>Solveur adaptatif 4DOF (translation + rotation) switchant en 6DOF sous charge asymétrique. Modélisation atmosphérique temps réel : vent, densité, température, effet Coriolis. Précision sub-MOA à 1 500 m depuis tripode fixe.</p>
+                <h4 data-i18n="tech-t01">4DOF / 6DOF Ballistic Solver</h4>
+                <p data-i18n="tech-t01-p">Adaptive 4DOF (translation + rotation) solver switching to 6DOF under asymmetric load. Real-time atmospheric modeling: wind, density, temperature, Coriolis effect. Sub-MOA precision at 1,500 m from fixed tripod.</p>
             </div>
             <div class="tech-item">
                 <div class="tech-item-num">T-02</div>
-                <h4>Tracking Kalman 9 États</h4>
-                <p>Filtre de Kalman étendu 9 états : position, vitesse, accélération, attitude. Fusion IMU + GPS/INS + baro + LRF. Navigation GPS-deniée par INS couplé à l'odométrie visuelle. Maintien de piste ≥ 30 cibles simultanées.</p>
+                <h4 data-i18n="tech-t02">9-State Kalman Tracking</h4>
+                <p data-i18n="tech-t02-p">Extended Kalman filter 9 states: position, velocity, acceleration, attitude. IMU + GPS/INS + baro + LRF fusion. GPS-denied navigation by INS coupled with visual odometry. Simultaneous track maintenance ≥ 30 targets.</p>
             </div>
             <div class="tech-item">
                 <div class="tech-item-num">T-03</div>
-                <h4>Optronique EO/IR Dual-Chain</h4>
-                <p>Capteur EO jour et IR nuit commutables. Pipeline CV embarqué sur FPGA : détection, classification, suivi. Fonctionnement H24, tous temps. Stabilisation optique 3 axes découplée de la plateforme.</p>
+                <h4 data-i18n="tech-t03">Dual-Chain EO/IR Optronics</h4>
+                <p data-i18n="tech-t03-p">Switchable EO day and IR night sensor. FPGA-embedded CV pipeline: detection, classification, tracking. 24/7 all-weather operation. 3-axis optical stabilization decoupled from platform.</p>
             </div>
             <div class="tech-item">
                 <div class="tech-item-num">T-04</div>
-                <h4>IFF Tripartite & Cybersécurité</h4>
-                <p>IFF 3 couches : Mode 5 électronique, marqueurs IR actifs, classification CV. Chiffrement AES-256-GCM, authentification multi-facteur, anti-spoofing GPS, protection TEMPEST. Conformité MIL-STD-461G, DO-178C DAL-B.</p>
+                <h4 data-i18n="tech-t04">Tripartite IFF & Cybersecurity</h4>
+                <p data-i18n="tech-t04-p">3-layer IFF: Mode 5 electronic, active IR markers, CV classification. AES-256-GCM encryption, multi-factor authentication, GPS anti-spoofing, TEMPEST protection. MIL-STD-461G, DO-178C DAL-B compliant.</p>
             </div>
         </div>
     </div>
@@ -1053,29 +1077,29 @@
 <section class="apps">
     <div class="apps-inner">
         <div class="fade">
-            <div class="label">Plateformes</div>
-            <h2>Une architecture, toute plateforme.</h2>
+            <div class="label" data-i18n="apps-label">Platforms</div>
+            <h2 data-i18n="apps-h2">One architecture, any platform.</h2>
         </div>
         <div class="apps-grid fade fade-d1">
             <div class="app-card">
                 <div class="app-card-num">01</div>
-                <h4>Tripode / Fixe</h4>
-                <p>Installation au sol ou en bâtiment. Performance nominale : sub-MOA à 1 500 m. Armes 7,62 MAG à .50 BMG / 20 mm. Module POWER autonome, déploiement &lt; 15 min.</p>
+                <h4 data-i18n="app1-h4">Tripod / Fixed</h4>
+                <p data-i18n="app1-p">Ground or building installation. Nominal performance: sub-MOA at 1,500 m. Weapons 7.62 MAG to .50 BMG / 20 mm. Autonomous POWER module, deployment &lt; 15 min.</p>
             </div>
             <div class="app-card">
                 <div class="app-card-num">02</div>
-                <h4>Véhicule</h4>
-                <p>Intégration sur véhicule à roues ou chenillé. Stabilisation 3 axes découplée du roulis chassis. Compensation vitesse plateforme en temps réel. Interface MIL-STD-1553 / CAN bus.</p>
+                <h4 data-i18n="app2-h4">Vehicle</h4>
+                <p data-i18n="app2-p">Integration on wheeled or tracked vehicle. 3-axis stabilization decoupled from chassis roll. Real-time platform velocity compensation. MIL-STD-1553 / CAN bus interface.</p>
             </div>
             <div class="app-card">
                 <div class="app-card-num">03</div>
-                <h4>Drone Tactique</h4>
-                <p>Masse totale système optimisée. Alimentation sur bus drone. Liaison datalink chiffrée AES-256. Autonomie de mission H24 avec module IR nocturne et navigation GPS-deniée.</p>
+                <h4 data-i18n="app3-h4">Tactical Drone</h4>
+                <p data-i18n="app3-p">Optimized total system mass. Drone bus power supply. AES-256 encrypted datalink. 24/7 mission autonomy with IR night module and GPS-denied navigation.</p>
             </div>
             <div class="app-card">
                 <div class="app-card-num">04</div>
-                <h4>Hélicoptère</h4>
-                <p>Fixation sur pylône ou tourelle ventrale. Compensation Doppler et vibrations rotor intégrée. Certifiable DO-178C DAL-B. Compatibilité plateformes existantes via module GIMBAL dédié.</p>
+                <h4 data-i18n="app4-h4">Helicopter</h4>
+                <p data-i18n="app4-p">Pylon or ventral turret mounting. Integrated Doppler and rotor vibration compensation. DO-178C DAL-B certifiable. Compatibility with existing platforms via dedicated GIMBAL module.</p>
             </div>
         </div>
     </div>
@@ -1086,9 +1110,9 @@
 <section class="team" id="team">
     <div class="team-inner">
         <div class="team-left fade">
-            <div class="label">Team</div>
-            <h2>Construit par des ingénieurs,<br>pour des opérateurs.</h2>
-            <p>MARS est développé par une équipe pluridisciplinaire couvrant les systèmes embarqués temps réel, la balistique, l'optronique, la cybersécurité et l'intégration plateforme défense.</p>
+            <div class="label" data-i18n="team-label">Team</div>
+            <h2 data-i18n="team-h2">Built by engineers,<br>for operators.</h2>
+            <p data-i18n="team-p">MARS is developed by a multidisciplinary team covering real-time embedded systems, ballistics, optronics, cybersecurity, and defense platform integration.</p>
             <div class="skill-tags">
                 <span class="skill-tag">Systèmes Embarqués</span>
                 <span class="skill-tag">Balistique Externe</span>
@@ -1124,15 +1148,15 @@
 <section class="cta-section" id="contact">
     <div class="scan-lines"></div>
     <div class="cta-inner">
-        <h2>
-            Modulaire, déployable,<br>
+        <h2 data-i18n="cta-h2">
+            Modular, deployable,<br>
             <em>sub-MOA.</em><br>
-            Sur toute plateforme,<br>H24.
+            On any platform,<br>24/7.
         </h2>
         <div class="cta-btns">
-            <a href="mailto:contact@mars-systems.eu" class="btn btn-green">Contact Us</a>
-            <a href="research.html" class="btn btn-dark">Research Paper</a>
-            <a href="https://demo.mars-system.eu" class="btn btn-dark">Live Demo</a>
+            <a href="mailto:contact@mars-systems.eu" class="btn btn-green" data-i18n="cta-contact">Contact Us</a>
+            <a href="research.html" class="btn btn-dark" data-i18n="cta-research">Research Paper</a>
+            <a href="https://demo.mars-system.eu" class="btn btn-dark" data-i18n="cta-demo">Demo</a>
         </div>
     </div>
 </section>
@@ -1145,7 +1169,7 @@
             <div class="footer-brand">MARS — Modular Autonomous Ranged System</div>
             <div class="footer-contact">contact@mars-systems.eu · Europe</div>
         </div>
-        <div class="footer-right">© 2026 MARS. All rights reserved.</div>
+        <div class="footer-right" data-i18n="footer-copy">© 2026 MARS. All rights reserved.</div>
     </div>
 </footer>
 
@@ -1156,6 +1180,150 @@
     }, { threshold: 0.08 });
 
     document.querySelectorAll('.fade').forEach(el => obs.observe(el));
+
+    /* ─── i18n ─── */
+    const i18n = {
+        en: {
+            'nav-home': 'Home',
+            'nav-platform': 'Platform',
+            'nav-technology': 'Technology',
+            'nav-team': 'Team',
+            'nav-demo': 'Demo',
+            'hero-eyebrow': 'MARS SYSTEMS · Autonomous Defence Precision',
+            'hero-h1': 'Modular<br>Autonomous<br><em>Ranged Systems.</em>',
+            'hero-sub': 'Modular HITL autonomous weapon system.<br>Adaptive 4DOF/6DOF solver, 9-state Kalman tracking,<br>EO/IR dual optronics, integrated IFF.<br>The human authorizes. The system executes.',
+            'hero-demo': 'Demo',
+            'hero-contact': 'Contact Us',
+            'hero-research': 'Research Paper',
+            'what-label': 'What We Do',
+            'what-text': 'MARS is a <mark>Human-In-The-Loop</mark> autonomous weapon system designed for deployment on any platform — drone, vehicle, helicopter, fixed — with field weapon interchangeability and <mark>sub-MOA precision at supersonic velocity.</mark>',
+            'hitl-label': 'HITL Philosophy',
+            'hitl-h2': 'The human authorizes. The system executes.',
+            'hitl-p': 'MARS is strictly HITL — no fire without explicit operator authorization (AUTH step) and without IFF validation. The system never fires without both conditions validated. HITL compliance is non-overridable and certifiable.',
+            'hitl-btn': 'Request a Briefing',
+            'how-label': 'Engagement Sequence',
+            'how-h2': '10 Steps, from SAFE to BDA',
+            'step1-num': '01-03 — SCAN / DETECT',
+            'step1-h3': 'Detection & Sensor Fusion',
+            'step1-p': 'Dual EO/IR feed activated. CV pipeline detects potential targets. IMU + GPS/INS + baro + LRF fusion into a 9-component state vector, continuously updated by the Kalman filter.',
+            'step2-num': '04-05 — CLASSIFY / IFF',
+            'step2-h3': 'Target Identification & Qualification',
+            'step2-p': 'Tripartite IFF: Mode 5 electronic, active IR markers, CV classification by embedded neural network. Automatic ROE verification. No fire possible without IFF validated on all 3 layers.',
+            'step3-num': '06-07 — LOCK / SOLUTION',
+            'step3-h3': 'Adaptive Ballistic Solver',
+            'step3-p': '9-state Kalman tracking on locked target. Adaptive 4DOF/6DOF solver: wind correction, air density, Coriolis effect, platform velocity. GPS-denied navigation by INS + visual odometry. Fire solution in &lt;200 ms.',
+            'step4-num': '08-10 — AUTH / FIRE / BDA',
+            'step4-h3': 'Authorized Fire & Battle Damage Assessment',
+            'step4-p': 'Mandatory operator authorization (non-overridable HITL). Fire on explicit confirmation. Automatic post-engagement BDA: damage assessment, situation report update, AES-256 signed report.',
+            'tech-label': 'Technology',
+            'tech-h2': 'Modular Real-Time Architecture',
+            'tech-t01': '4DOF / 6DOF Ballistic Solver',
+            'tech-t01-p': 'Adaptive 4DOF (translation + rotation) solver switching to 6DOF under asymmetric load. Real-time atmospheric modeling: wind, density, temperature, Coriolis effect. Sub-MOA precision at 1,500 m from fixed tripod.',
+            'tech-t02': '9-State Kalman Tracking',
+            'tech-t02-p': 'Extended Kalman filter 9 states: position, velocity, acceleration, attitude. IMU + GPS/INS + baro + LRF fusion. GPS-denied navigation by INS coupled with visual odometry. Simultaneous track maintenance ≥ 30 targets.',
+            'tech-t03': 'Dual-Chain EO/IR Optronics',
+            'tech-t03-p': 'Switchable EO day and IR night sensor. FPGA-embedded CV pipeline: detection, classification, tracking. 24/7 all-weather operation. 3-axis optical stabilization decoupled from platform.',
+            'tech-t04': 'Tripartite IFF & Cybersecurity',
+            'tech-t04-p': '3-layer IFF: Mode 5 electronic, active IR markers, CV classification. AES-256-GCM encryption, multi-factor authentication, GPS anti-spoofing, TEMPEST protection. MIL-STD-461G, DO-178C DAL-B compliant.',
+            'apps-label': 'Platforms',
+            'apps-h2': 'One architecture, any platform.',
+            'app1-h4': 'Tripod / Fixed',
+            'app1-p': 'Ground or building installation. Nominal performance: sub-MOA at 1,500 m. Weapons 7.62 MAG to .50 BMG / 20 mm. Autonomous POWER module, deployment &lt; 15 min.',
+            'app2-h4': 'Vehicle',
+            'app2-p': 'Integration on wheeled or tracked vehicle. 3-axis stabilization decoupled from chassis roll. Real-time platform velocity compensation. MIL-STD-1553 / CAN bus interface.',
+            'app3-h4': 'Tactical Drone',
+            'app3-p': 'Optimized total system mass. Drone bus power supply. AES-256 encrypted datalink. 24/7 mission autonomy with IR night module and GPS-denied navigation.',
+            'app4-h4': 'Helicopter',
+            'app4-p': 'Pylon or ventral turret mounting. Integrated Doppler and rotor vibration compensation. DO-178C DAL-B certifiable. Compatibility with existing platforms via dedicated GIMBAL module.',
+            'team-label': 'Team',
+            'team-h2': 'Built by engineers,<br>for operators.',
+            'team-p': 'MARS is developed by a multidisciplinary team covering real-time embedded systems, ballistics, optronics, cybersecurity, and defense platform integration.',
+            'cta-h2': 'Modular, deployable,<br><em>sub-MOA.</em><br>On any platform,<br>24/7.',
+            'cta-contact': 'Contact Us',
+            'cta-research': 'Research Paper',
+            'cta-demo': 'Demo',
+            'footer-copy': '© 2026 MARS. All rights reserved.'
+        },
+        fr: {
+            'nav-home': 'Accueil',
+            'nav-platform': 'Plateforme',
+            'nav-technology': 'Technologie',
+            'nav-team': 'Équipe',
+            'nav-demo': 'Démo',
+            'hero-eyebrow': 'MARS SYSTEMS · Défense Autonome de Précision',
+            'hero-h1': 'Modular<br>Autonomous<br><em>Ranged Systems.</em>',
+            'hero-sub': 'Système d\'arme autonome HITL modulaire.<br>Solveur 4DOF/6DOF adaptatif, tracking Kalman<br>9 états, optronique EO/IR dual, IFF intégré.<br>L\'humain autorise. Le système exécute.',
+            'hero-demo': 'Démo',
+            'hero-contact': 'Nous Contacter',
+            'hero-research': 'Document de Recherche',
+            'what-label': 'Ce que nous faisons',
+            'what-text': 'MARS est un système d\'arme autonome <mark>Human-In-The-Loop</mark> conçu pour le déploiement sur toute plateforme — drone, véhicule, hélicoptère, fixe — avec interchangeabilité d\'arme sur le terrain et <mark>précision sub-MOA en régime supersonique.</mark>',
+            'hitl-label': 'Philosophie HITL',
+            'hitl-h2': 'L\'humain autorise. Le système exécute.',
+            'hitl-p': 'MARS est strictement HITL — aucun tir sans autorisation explicite de l\'opérateur (étape AUTH) et sans validation IFF. Le système ne tire jamais sans les deux conditions validées. La conformité HITL est non-overridable et certifiable.',
+            'hitl-btn': 'Demander un briefing',
+            'how-label': 'Séquence d\'engagement',
+            'how-h2': '10 étapes, de SAFE à BDA',
+            'step1-num': '01-03 — SCAN / DETECT',
+            'step1-h3': 'Détection & Fusion Capteurs',
+            'step1-p': 'Flux EO/IR dual activé. Le pipeline CV détecte les cibles potentielles. Fusion IMU + GPS/INS + baro + LRF dans un vecteur d\'état à 9 composantes, mis à jour en continu par le filtre de Kalman.',
+            'step2-num': '04-05 — CLASSIFY / IFF',
+            'step2-h3': 'Identification & Qualification de Cible',
+            'step2-p': 'IFF tripartite : Mode 5 électronique, marqueurs IR actifs, classification CV par réseau de neurones embarqué. Vérification ROE automatique. Aucun tir possible sans IFF validé sur les 3 couches.',
+            'step3-num': '06-07 — LOCK / SOLUTION',
+            'step3-h3': 'Solveur Balistique Adaptatif',
+            'step3-p': 'Tracking Kalman 9 états sur la cible verrouillée. Solveur 4DOF/6DOF adaptatif : correction vent, densité d\'air, effet Coriolis, vitesse plateforme. Navigation GPS-deniée par INS + odométrie visuelle. Solution de tir en &lt;200 ms.',
+            'step4-num': '08-10 — AUTH / FIRE / BDA',
+            'step4-h3': 'Tir Autorisé & Battle Damage Assessment',
+            'step4-p': 'Autorisation opérateur obligatoire (HITL non-overridable). Tir sur confirmation explicite. BDA automatique post-engagement : évaluation des dommages, mise à jour du tableau de situation, compte-rendu signé AES-256.',
+            'tech-label': 'Technologie',
+            'tech-h2': 'Architecture Modulaire & Temps Réel',
+            'tech-t01': 'Solveur Balistique 4DOF / 6DOF',
+            'tech-t01-p': 'Solveur adaptatif 4DOF (translation + rotation) switchant en 6DOF sous charge asymétrique. Modélisation atmosphérique temps réel : vent, densité, température, effet Coriolis. Précision sub-MOA à 1 500 m depuis tripode fixe.',
+            'tech-t02': 'Tracking Kalman 9 États',
+            'tech-t02-p': 'Filtre de Kalman étendu 9 états : position, vitesse, accélération, attitude. Fusion IMU + GPS/INS + baro + LRF. Navigation GPS-deniée par INS couplé à l\'odométrie visuelle. Maintien de piste ≥ 30 cibles simultanées.',
+            'tech-t03': 'Optronique EO/IR Dual-Chain',
+            'tech-t03-p': 'Capteur EO jour et IR nuit commutables. Pipeline CV embarqué sur FPGA : détection, classification, suivi. Fonctionnement H24, tous temps. Stabilisation optique 3 axes découplée de la plateforme.',
+            'tech-t04': 'IFF Tripartite & Cybersécurité',
+            'tech-t04-p': 'IFF 3 couches : Mode 5 électronique, marqueurs IR actifs, classification CV. Chiffrement AES-256-GCM, authentification multi-facteur, anti-spoofing GPS, protection TEMPEST. Conformité MIL-STD-461G, DO-178C DAL-B.',
+            'apps-label': 'Plateformes',
+            'apps-h2': 'Une architecture, toute plateforme.',
+            'app1-h4': 'Tripode / Fixe',
+            'app1-p': 'Installation au sol ou en bâtiment. Performance nominale : sub-MOA à 1 500 m. Armes 7,62 MAG à .50 BMG / 20 mm. Module POWER autonome, déploiement &lt; 15 min.',
+            'app2-h4': 'Véhicule',
+            'app2-p': 'Intégration sur véhicule à roues ou chenillé. Stabilisation 3 axes découplée du roulis chassis. Compensation vitesse plateforme en temps réel. Interface MIL-STD-1553 / CAN bus.',
+            'app3-h4': 'Drone Tactique',
+            'app3-p': 'Masse totale système optimisée. Alimentation sur bus drone. Liaison datalink chiffrée AES-256. Autonomie de mission H24 avec module IR nocturne et navigation GPS-deniée.',
+            'app4-h4': 'Hélicoptère',
+            'app4-p': 'Fixation sur pylône ou tourelle ventrale. Compensation Doppler et vibrations rotor intégrée. Certifiable DO-178C DAL-B. Compatibilité plateformes existantes via module GIMBAL dédié.',
+            'team-label': 'Équipe',
+            'team-h2': 'Construit par des ingénieurs,<br>pour des opérateurs.',
+            'team-p': 'MARS est développé par une équipe pluridisciplinaire couvrant les systèmes embarqués temps réel, la balistique, l\'optronique, la cybersécurité et l\'intégration plateforme défense.',
+            'cta-h2': 'Modulaire, déployable,<br><em>sub-MOA.</em><br>Sur toute plateforme,<br>H24.',
+            'cta-contact': 'Nous Contacter',
+            'cta-research': 'Document de Recherche',
+            'cta-demo': 'Démo',
+            'footer-copy': '© 2026 MARS. Tous droits réservés.'
+        }
+    };
+
+    let currentLang = 'en';
+
+    function applyLang(lang) {
+        currentLang = lang;
+        const t = i18n[lang];
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+            const key = el.getAttribute('data-i18n');
+            if (t[key] !== undefined) el.innerHTML = t[key];
+        });
+        document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+        document.getElementById('btn-fr').classList.toggle('active', lang === 'fr');
+        document.documentElement.lang = lang;
+    }
+
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.addEventListener('click', () => applyLang(btn.dataset.lang));
+    });
 </script>
 
 </body>
