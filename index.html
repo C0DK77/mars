@@ -9,18 +9,18 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg:        #090b0e;
-            --bg-nav:    rgba(7, 9, 12, 0.95);
-            --bg-card:   rgba(255,255,255,0.025);
-            --text:      #dce4d8;
-            --muted:     #556055;
-            --green:     #5a8a3c;
-            --green-dim: rgba(90,138,60,0.12);
+            --bg:        #0f1a10;
+            --bg-nav:    rgba(12, 24, 14, 0.96);
+            --bg-card:   rgba(255,255,255,0.05);
+            --text:      #e8f0e3;
+            --muted:     #7a9870;
+            --green:     #6aaa44;
+            --green-dim: rgba(90,138,60,0.18);
             --red:       #1e3a5f;
             --navy:      #1e3a5f;
             --accent:    var(--green);
-            --border:    rgba(255,255,255,0.07);
-            --border-hi: rgba(90,138,60,0.3);
+            --border:    rgba(255,255,255,0.11);
+            --border-hi: rgba(90,138,60,0.5);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -280,6 +280,7 @@
         .hero-visual svg {
             width: 100%;
             height: 100%;
+            filter: brightness(2.2);
         }
 
         .hud-tag {
@@ -288,9 +289,9 @@
             font-size: 0.58rem;
             letter-spacing: 0.1em;
             color: var(--green);
-            background: rgba(7, 9, 12, 0.9);
+            background: rgba(12, 24, 14, 0.88);
             padding: 0.28rem 0.6rem;
-            border: 1px solid rgba(90,138,60,0.4);
+            border: 1px solid rgba(90,138,60,0.6);
         }
 
         @keyframes blink {
@@ -359,12 +360,15 @@
             justify-content: center;
         }
 
+        .col-visual svg { filter: brightness(2.2); }
+        .step-visual svg { filter: brightness(2.2); }
+
         .grid-bg {
             position: absolute;
             inset: 0;
             background-image:
-                linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+                linear-gradient(rgba(255,255,255,0.07) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.07) 1px, transparent 1px);
             background-size: 36px 36px;
         }
 
@@ -619,7 +623,7 @@
         /* ─── CTA — dark navy slab ─── */
         .cta-section {
             padding: 9rem 2.5rem;
-            background: #04060e;
+            background: #0a1a0b;
             border-top: 1px solid var(--border-hi);
             position: relative;
             overflow: hidden;
@@ -944,7 +948,7 @@
                 <text x="142" y="85" font-family="monospace" font-size="5" fill="rgba(90,138,60,0.35)">500m</text>
                 <text x="126" y="85" font-family="monospace" font-size="5" fill="rgba(90,138,60,0.3)">250m</text>
                 <!-- status readouts -->
-                <rect x="2" y="2" width="62" height="28" fill="rgba(7,9,12,0.8)" stroke="rgba(90,138,60,0.2)" stroke-width="0.5"/>
+                <rect x="2" y="2" width="62" height="28" fill="rgba(12,24,14,0.8)" stroke="rgba(90,138,60,0.2)" stroke-width="0.5"/>
                 <text x="6" y="11" font-family="monospace" font-size="4.5" fill="rgba(90,138,60,0.7)">EO/IR: ACTIVE</text>
                 <text x="6" y="19" font-family="monospace" font-size="4.5" fill="rgba(90,138,60,0.6)">TRACK: LOCKED</text>
                 <text x="6" y="27" font-family="monospace" font-size="4.5" fill="rgba(30,58,95,0.8)">IFF  : CLEAR ✓</text>
