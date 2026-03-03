@@ -717,17 +717,41 @@
             color: var(--muted);
         }
 
-        /* ─── FADE-IN ─── */
+        /* ─── REVEAL ANIMATIONS ─── */
         .fade {
             opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.6s ease, transform 0.6s ease;
+            transform: translateY(56px);
+            transition:
+                opacity    0.8s cubic-bezier(0.16, 1, 0.3, 1),
+                transform  0.8s cubic-bezier(0.16, 1, 0.3, 1),
+                filter     0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            filter: blur(3px);
+            will-change: transform, opacity, filter;
         }
 
-        .fade.in { opacity: 1; transform: translateY(0); }
-        .fade-d1 { transition-delay: 0.1s; }
-        .fade-d2 { transition-delay: 0.2s; }
-        .fade-d3 { transition-delay: 0.3s; }
+        /* Visual blocks: scale up instead of just slide */
+        .col-visual.fade,
+        .step-visual.fade,
+        .hero-visual.fade {
+            transform: translateY(40px) scale(0.96);
+            filter: blur(6px);
+        }
+
+        .fade.in {
+            opacity: 1;
+            transform: none;
+            filter: blur(0);
+        }
+
+        /* Section headings get more amplitude */
+        .how-header.fade,
+        .statement-inner.fade {
+            transform: translateY(70px);
+        }
+
+        .fade-d1 { transition-delay: 0.12s; }
+        .fade-d2 { transition-delay: 0.24s; }
+        .fade-d3 { transition-delay: 0.36s; }
 
         /* ─── LANG SWITCHER ─── */
         .lang-switcher {
@@ -1425,8 +1449,13 @@
 
 <script>
     const obs = new IntersectionObserver(entries => {
-        entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
-    }, { threshold: 0.08 });
+        entries.forEach(e => {
+            if (e.isIntersecting) {
+                e.target.classList.add('in');
+                obs.unobserve(e.target);
+            }
+        });
+    }, { threshold: 0.14, rootMargin: '0px 0px -40px 0px' });
 
     document.querySelectorAll('.fade').forEach(el => obs.observe(el));
 
