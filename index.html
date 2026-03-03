@@ -297,6 +297,32 @@
 
         .blink { animation: blink 2.2s ease-in-out infinite; }
 
+        /* ─── HERO SVG SEQUENCE ─── */
+        @keyframes svgFade {
+            from { opacity: 0; }
+            to   { opacity: 1; }
+        }
+
+        /* terrain lines – staggered */
+        .ht { opacity: 0; animation: svgFade 0.7s ease forwards; }
+        .ht1 { animation-delay: 0.20s; }
+        .ht2 { animation-delay: 0.35s; }
+        .ht3 { animation-delay: 0.48s; }
+        .ht4 { animation-delay: 0.60s; }
+        .ht5 { animation-delay: 0.70s; }
+
+        /* launch point appears with terrain */
+        .hero-launch  { opacity: 0; animation: svgFade 0.5s ease forwards 0.30s; }
+
+        /* reticle snaps in as trajectory arrives */
+        .hero-reticle { opacity: 0; animation: svgFade 0.4s ease forwards 2.40s; }
+
+        /* range annotation fades after reticle */
+        .hero-range   { opacity: 0; animation: svgFade 0.6s ease forwards 2.60s; }
+
+        /* HUD tags last */
+        .hero-hud     { opacity: 0; animation: svgFade 0.5s ease forwards 2.75s; }
+
         /* ─── DIVIDER ─── */
         .divider {
             height: 1px;
@@ -857,16 +883,16 @@
                 </defs>
                 <rect width="100%" height="100%" fill="url(#pg)"/>
 
-                <!-- terrain -->
-                <polyline points="0,410 80,378 160,340 240,290 320,308 400,268 480,292 560,260 640,235"
+                <!-- terrain – staggered fade in -->
+                <polyline class="ht ht1" points="0,410 80,378 160,340 240,290 320,308 400,268 480,292 560,260 640,235"
                     fill="none" stroke="rgba(90,138,60,0.22)" stroke-width="1.2"/>
-                <polyline points="0,440 80,408 160,370 240,320 320,338 400,298 480,322 560,290 640,265"
+                <polyline class="ht ht2" points="0,440 80,408 160,370 240,320 320,338 400,298 480,322 560,290 640,265"
                     fill="none" stroke="rgba(90,138,60,0.1)" stroke-width="0.9"/>
-                <polyline points="0,380 80,348 160,310 240,260 320,278 400,238 480,262 560,230 640,205"
+                <polyline class="ht ht3" points="0,380 80,348 160,310 240,260 320,278 400,238 480,262 560,230 640,205"
                     fill="none" stroke="rgba(90,138,60,0.15)" stroke-width="0.9"/>
-                <polyline points="0,350 80,318 160,280 240,230 320,248 400,208 480,232 560,200 640,175"
+                <polyline class="ht ht4" points="0,350 80,318 160,280 240,230 320,248 400,208 480,232 560,200 640,175"
                     fill="none" stroke="rgba(90,138,60,0.08)" stroke-width="0.7"/>
-                <polyline points="0,320 80,288 160,250 240,200 320,218 400,178 480,202 560,170 640,145"
+                <polyline class="ht ht5" points="0,320 80,288 160,250 240,200 320,218 400,178 480,202 560,170 640,145"
                     fill="none" stroke="rgba(90,138,60,0.06)" stroke-width="0.7"/>
 
                 <!-- verticals -->
@@ -878,47 +904,53 @@
                 <line x1="480" y1="202" x2="480" y2="460" stroke="rgba(90,138,60,0.05)" stroke-width="0.5"/>
                 <line x1="560" y1="170" x2="560" y2="460" stroke="rgba(90,138,60,0.05)" stroke-width="0.5"/>
 
-                <!-- trajectory arc -->
-                <path d="M 60,400 Q 320,80 580,270"
+                <!-- launch point -->
+                <g class="hero-launch">
+                    <circle cx="60" cy="400" r="4"
+                        fill="none" stroke="rgba(90,138,60,0.6)" stroke-width="1"/>
+                    <circle cx="60" cy="400" r="1.5"
+                        fill="rgba(90,138,60,0.8)"/>
+                </g>
+
+                <!-- trajectory arc – drawn by JS -->
+                <path id="hero-traj" d="M 60,400 Q 320,80 580,270"
                     fill="none" stroke="rgba(90,138,60,0.35)" stroke-width="1.2"
-                    stroke-dasharray="6,3"/>
+                    opacity="0"/>
 
                 <!-- reticle -->
-                <rect x="566" y="258" width="28" height="28"
-                    fill="none" stroke="rgba(30,58,95,0.9)" stroke-width="1.5"/>
-                <line x1="566" y1="272" x2="558" y2="272"
-                    stroke="rgba(30,58,95,0.9)" stroke-width="1"/>
-                <line x1="594" y1="272" x2="602" y2="272"
-                    stroke="rgba(30,58,95,0.9)" stroke-width="1"/>
-                <line x1="580" y1="258" x2="580" y2="250"
-                    stroke="rgba(30,58,95,0.9)" stroke-width="1"/>
-                <line x1="580" y1="286" x2="580" y2="294"
-                    stroke="rgba(30,58,95,0.9)" stroke-width="1"/>
-                <circle cx="580" cy="272" r="3"
-                    fill="rgba(30,58,95,1)" class="blink"/>
-
-                <!-- launch point -->
-                <circle cx="60" cy="400" r="4"
-                    fill="none" stroke="rgba(90,138,60,0.6)" stroke-width="1"/>
-                <circle cx="60" cy="400" r="1.5"
-                    fill="rgba(90,138,60,0.8)"/>
+                <g class="hero-reticle">
+                    <rect x="566" y="258" width="28" height="28"
+                        fill="none" stroke="rgba(30,58,95,0.9)" stroke-width="1.5"/>
+                    <line x1="566" y1="272" x2="558" y2="272"
+                        stroke="rgba(30,58,95,0.9)" stroke-width="1"/>
+                    <line x1="594" y1="272" x2="602" y2="272"
+                        stroke="rgba(30,58,95,0.9)" stroke-width="1"/>
+                    <line x1="580" y1="258" x2="580" y2="250"
+                        stroke="rgba(30,58,95,0.9)" stroke-width="1"/>
+                    <line x1="580" y1="286" x2="580" y2="294"
+                        stroke="rgba(30,58,95,0.9)" stroke-width="1"/>
+                    <circle cx="580" cy="272" r="3"
+                        fill="rgba(30,58,95,1)" class="blink"/>
+                </g>
 
                 <!-- range annotation -->
-                <line x1="60" y1="430" x2="580" y2="430"
-                    stroke="rgba(90,138,60,0.15)" stroke-width="0.7"/>
-                <line x1="60"  y1="426" x2="60"  y2="434"
-                    stroke="rgba(90,138,60,0.3)" stroke-width="0.7"/>
-                <line x1="580" y1="426" x2="580" y2="434"
-                    stroke="rgba(90,138,60,0.3)" stroke-width="0.7"/>
-                <text x="320" y="444"
-                    font-family="monospace" font-size="7"
-                    fill="rgba(90,138,60,0.4)" text-anchor="middle">
-                    EFFECTIVE RANGE
-                </text>
+                <g class="hero-range">
+                    <line x1="60" y1="430" x2="580" y2="430"
+                        stroke="rgba(90,138,60,0.15)" stroke-width="0.7"/>
+                    <line x1="60"  y1="426" x2="60"  y2="434"
+                        stroke="rgba(90,138,60,0.3)" stroke-width="0.7"/>
+                    <line x1="580" y1="426" x2="580" y2="434"
+                        stroke="rgba(90,138,60,0.3)" stroke-width="0.7"/>
+                    <text x="320" y="444"
+                        font-family="monospace" font-size="7"
+                        fill="rgba(90,138,60,0.4)" text-anchor="middle">
+                        EFFECTIVE RANGE
+                    </text>
+                </g>
             </svg>
 
-            <div class="hud-tag" style="top: 55%; left: 78%;">TARGET LOCKED</div>
-            <div class="hud-tag" style="bottom: 18%; left: 5%;">ORIGIN POINT</div>
+            <div class="hud-tag hero-hud" style="top: 55%; left: 78%;">TARGET LOCKED</div>
+            <div class="hud-tag hero-hud" style="bottom: 18%; left: 5%;">ORIGIN POINT</div>
         </div>
     </div>
 </section>
@@ -1460,6 +1492,32 @@
     }, { threshold: 0.14, rootMargin: '0px 0px -40px 0px' });
 
     document.querySelectorAll('.fade').forEach(el => obs.observe(el));
+
+    /* ─── HERO TRAJECTORY DRAW ─── */
+    (function () {
+        const traj = document.getElementById('hero-traj');
+        if (!traj) return;
+        const L = Math.ceil(traj.getTotalLength());
+
+        // set up for draw animation (solid line, offset = full length → hidden)
+        traj.setAttribute('stroke-dasharray', L + ' ' + L);
+        traj.setAttribute('stroke-dashoffset', L);
+        traj.setAttribute('opacity', '1');
+
+        // draw after terrain finishes (~0.9s)
+        setTimeout(() => {
+            traj.style.transition = 'stroke-dashoffset 1.6s cubic-bezier(0.4, 0, 0.2, 1)';
+            traj.getBoundingClientRect(); // force layout
+            traj.setAttribute('stroke-dashoffset', '0');
+
+            // restore dashed pattern after draw completes
+            traj.addEventListener('transitionend', () => {
+                traj.style.transition = '';
+                traj.setAttribute('stroke-dasharray', '6 3');
+                traj.removeAttribute('stroke-dashoffset');
+            }, { once: true });
+        }, 900);
+    })();
 
     /* ─── i18n ─── */
     const i18n = {
