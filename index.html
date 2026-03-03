@@ -211,14 +211,7 @@
 
         /* faint grid overlay */
         .hero::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background-image:
-                linear-gradient(rgba(125,220,74,0.05) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(125,220,74,0.05) 1px, transparent 1px);
-            background-size: 60px 60px;
-            pointer-events: none;
+            display: none;
         }
 
         .hero-inner {
@@ -275,12 +268,15 @@
         .hero-visual {
             position: relative;
             height: 460px;
+            background: #111411;
+            border: 1px solid rgba(125,220,74,0.2);
+            box-shadow: 0 0 40px rgba(125,220,74,0.05);
         }
 
         .hero-visual svg {
             width: 100%;
             height: 100%;
-            filter: brightness(2.2);
+            filter: brightness(2.5);
         }
 
         .hud-tag {
@@ -350,8 +346,9 @@
         .two-col-inner.rev > * { direction: ltr; }
 
         .col-visual {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
+            background: #111411;
+            border: 1px solid rgba(125,220,74,0.25);
+            box-shadow: 0 0 32px rgba(125,220,74,0.06), inset 0 0 40px rgba(0,0,0,0.4);
             aspect-ratio: 4 / 3;
             position: relative;
             overflow: hidden;
@@ -360,8 +357,8 @@
             justify-content: center;
         }
 
-        .col-visual svg { filter: brightness(2.2); }
-        .step-visual svg { filter: brightness(2.2); }
+        .col-visual svg { filter: brightness(2.5); }
+        .step-visual svg { filter: brightness(2.5); }
 
         .grid-bg {
             position: absolute;
@@ -457,8 +454,9 @@
         }
 
         .step-visual {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
+            background: #111411;
+            border: 1px solid rgba(125,220,74,0.25);
+            box-shadow: 0 0 32px rgba(125,220,74,0.06), inset 0 0 40px rgba(0,0,0,0.4);
             aspect-ratio: 16 / 10;
             position: relative;
             overflow: hidden;
