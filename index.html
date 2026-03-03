@@ -1452,7 +1452,9 @@
         entries.forEach(e => {
             if (e.isIntersecting) {
                 e.target.classList.add('in');
-                obs.unobserve(e.target);
+            } else if (e.boundingClientRect.top < 0) {
+                // exited through the top → reset for re-animation on next scroll down
+                e.target.classList.remove('in');
             }
         });
     }, { threshold: 0.14, rootMargin: '0px 0px -40px 0px' });
